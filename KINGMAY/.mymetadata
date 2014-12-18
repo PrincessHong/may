@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="KINGMAY"
+  id="myeclipse.1409118352463"
+  context-root="/KINGMAY"
+  j2ee-spec="6.0"
+  archive="KINGMAY.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+						
+	<!--配置AdminLoginDao bean -->
+	<bean id="adminLoginDao" class="com.kingmay.adminlogin.dao.AdminLoginDao">
+		<property name="sessionFactory" >
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!--配置UserDao bean -->
+	<bean id="userDao" class="com.kingmay.admin.dao.UserDao">
+		<property name="sessionFactory" >
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>		
+	
+	<!--配置PeiDao bean -->
+	<bean id="peiDao" class="com.kingmay.pei.dao.PeiDao">
+		<property name="sessionFactory" >
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>			
+	
+	<!--配置AddPeiDao bean -->
+	<bean id="addPeiDao" class="com.kingmay.admin.dao.AddPeiDao">
+		<property name="sessionFactory" >
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	
+	<!--配置AddPeiDao bean -->
+	<bean id="ageDao" class="com.kingmay.score.dao.AgeDao">
+		<property name="sessionFactory" >
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	
+</beans>

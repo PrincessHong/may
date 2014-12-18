@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.kingmay.beans.Child" table="Childs" >
+		<id name="cid" column="cId" type="string">
+		</id>
+		<property name="cname" column="cName" />
+		<property name="csex" column="cSex" />
+		<property name="ctestname" column="cTestName" />
+		<property name="ctyear" column="cTYear" />
+		<property name="ctmonth" column="cTMonth" />
+		<property name="ctday" column="cTDay" />
+		<property name="cbyear" column="cBYear" />
+		<property name="cbmonth" column="cBMonth" />
+		<property name="cbday" column="cBDay" />
+		<property name="cclass" column="cClass" />
+		<property name="cculture" column="cCulture" />
+		<property name="chand" column="cHand" />
+		<property name="cptel" column="cPtel" />
+		<property name="cpemail" column="cPEmail" />
+		<property name="cpadd" column="cPadd" />
+		<property name="cstm" column="cStm" />
+		<property name="cyear"/>
+		<property name="cmonth"/>
+		<property name="cday"/>
+		<property name="curl"/>
+		<property name="cctime"/>
+		<property name="cuid"/>
+		<property name="canchange"/>
+	</class>
+</hibernate-mapping>

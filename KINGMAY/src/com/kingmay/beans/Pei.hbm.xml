@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.kingmay.beans.Pei" table="Peis" >
+		<id name="pname" column="pname">
+		</id>
+		<property name="pstm" column="pstm"/>
+		<property name="pnotify" column="pnotify"/>
+		<property name="pshunxu" column="pshunxu"/>
+		<property name="pparent" column="pparent"/>
+		<property name="ptype" column="ptype"/>
+		<property name="pstate" column="pstate"/>
+		<property name="pchild" column="pchild"/>
+		<property name="pid" column="pid" insert="false" update="false"/>
+	</class>
+</hibernate-mapping>

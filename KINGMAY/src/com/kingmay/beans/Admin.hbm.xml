@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.kingmay.beans.Admin" table="Admins" >
+		<id name="aid" column="aId">
+			<generator class="native" />
+		</id>
+		<property name="aname" column="aName" />
+		<property name="apwd" column="aPwd"/>
+		<property name="aauth" column="aAuth"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.kingmay.beans.User" table="Users" >
+		<id name="uid" column="uId">
+		</id>
+		<property name="ulname"  column="ulName"/>
+		<property name="ulpwd"  column="ulPwd"/>
+		<property name="uname"  column="uName"/>
+		<property name="uque"  column="uQue"/>
+		<property name="uans"  column="uAns"/>
+		<property name="ucanuse"  column="uCanUse"/>
+		<property name="uused"  column="uUsed"/>
+		<property name="ucanuse4" />
+		<property name="uused4" />
+		<property name="uemail" column="uEmail" />
+		<property name="utel" column="uTel" />
+		<property name="ucom" column="uCom" />
+		<property name="ucomadd"  column="uComadd"/>
+		<property name="upei"  column="uPei"/>
+		<property name="usex"  column="uSex"/>
+		<property name="uqq"  column="uQQ"/>
+		<property name="uiden"  column="uIden"/>
+		<property name="uquan"  column="uQuan"/>
+		<property name="ubir"  column="ubir"/>
+		<property name="umsn"  column="uMsn"/>
+		<property name="uip" column="uIp" />
+		<property name="uicq" column="uIcq" />
+		<property name="ustm"  column="uStm"/>
+		<property name="ulast"  column="uLast"/>
+		<property name="ubei"/>
+		<property name="uren"/>
+	</class>
+</hibernate-mapping>

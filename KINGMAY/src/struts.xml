@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.objectFactory" value="spring" />
+	<package name="default" extends="struts-default">
+
+		<!-- 拦截器 -->
+		<interceptors>
+			<interceptor name="interceptorAdminLogin"
+				class="com.kingmay.interceptors.AdminLoginInterceptor" />
+			<interceptor name="interceptorUserLogin"
+				class="com.kingmay.interceptors.UserLoginInterceptor"></interceptor>
+			<interceptor name="interceptorSuperAdmin"
+				class="com.kingmay.interceptors.SuperAdminInterceptor"></interceptor>
+		</interceptors>
+
+		<!-- 定义全局Result -->
+		<global-results>
+			<!-- 当返回login视图名时，转入/login.jsp页面 -->
+			<result name="userlogin">login.jsp</result>
+			<result name="adminlogin">/manager/login.jsp</result>
+		</global-results>
+
+
+		<!--管理员登录 -->
+		<action name="adminLoginAction" class="adminLoginAction"
+			method="execute">
+			<result name="success0">superadmin.jsp</result>
+			<result name="success1">admin.jsp</result>
+			<result name="input">/manager/login.jsp </result>
+		</action>
+
+		<!-- 查询培训班 -->
+		<action name="peiAction" class="queryPeiAction">
+			<result name="success">peilists.jsp</result>
+		</action>
+
+		<!-- 添加主试 -->
+		<action name="addUserAction" class="addUserAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="redirectAction">
+				<param name="actionName">allUserAction</param>
+			</result>
+			<result name="input">adduser.jsp</result>
+		</action>
+
+		<!-- 添加培训班 -->
+		<action name="addPeiAction" class="addPeiAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="redirectAction">
+				<param name="actionName">peiAction</param>
+			</result>
+			<result name="input">addpei.jsp</result>
+		</action>
+
+		<!-- 删除培训班 -->
+		<!-- 评论Action -->
+		<action name="delPeiAction" class="delPeiAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="redirectAction">
+				<param name="actionName">peiAction</param>
+			</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">peiAction</param>
+			</result>
+		</action>
+
+		<!-- 到达修改培训班信息页面 -->
+		<action name="goAdminPeiAction" class="goAdminPeiAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">adminpei.jsp</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">peiAction</param>
+			</result>
+		</action>
+
+		<!-- 修改培训班信息 -->
+		<action name="adminPeiAction" class="adminPeiAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="redirectAction">
+				<param name="actionName">peiAction</param>
+			</result>
+			<result name="input">adminpei.jsp</result>
+		</action>
+
+		<!-- 显示所有主试信息 -->
+		<action name="allUserAction" class="allUserAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">alluser.jsp</result>
+		</action>
+
+		<!-- 到达修改主试信息页面 -->
+		<action name="goAdminUserAction" class="goAdminUserAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">adminuser.jsp</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">allUserAction</param>
+			</result>
+		</action>
+
+		<!-- 修改主试信息 -->
+		<action name="adminUserAction" class="adminUserAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="redirectAction">
+				<param name="actionName">allUserAction</param>
+			</result>
+			<result name="input">adminuser.jsp</result>
+		</action>
+
+		<!-- 修改主试 -->
+		<action name="delUserAction" class="delUserAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="redirectAction">
+				<param name="actionName">allUserAction</param>
+			</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">allUserAction</param>
+			</result>
+		</action>
+
+		<!-- 退出后台登录 -->
+		<action name="adminLogoutAction" class="com.kingmay.admin.control.AdminLogoutAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/manager/login.jsp</result>
+		</action>
+
+		<!-- 用户登录 -->
+		<action name="userLoginAction" class="com.kingmay.user.control.UserLoginAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">getThisChildAction</param>
+			</result>
+			<result name="input">login.jsp</result>
+		</action>
+
+		<!-- 用户退出 -->
+		<action name="userLogoutAction" class="com.kingmay.user.control.UserLogoutAction">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">login.jsp</result>
+		</action>
+
+		<!-- 用户修改密码 -->
+		<action name="userChangePwdAction" class="userChangePwdAction">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">success.jsp</result>
+			<result name="input">changepwd.jsp</result>
+		</action>
+
+		<!-- 用户修改问题 -->
+		<action name="userChangeQueAction" class="userChangeQueAction">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">success.jsp</result>
+			<result name="input">changepwd.jsp</result>
+		</action>
+
+		<!-- 获取当前用户 -->
+		<action name="getThisChildAction" class="getThisUser">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">index.jsp</result>
+		</action>
+
+		<!-- 用户忘记密码 -->
+		<action name="forgetpwdAction" class="com.kingmay.user.control.ForgetPwdAction">
+			<result name="success">mypwd.jsp</result>
+		</action>
+
+		<!-- 到达用户维护个人信息页面 -->
+		<action name="goChangeInfoAction" class="goChangeInfoAction">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">userinfo.jsp</result>
+		</action>
+
+		<!-- 用户维护个人信息 -->
+		<action name="changeInfoAction" class="changeInfoAction">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">success.jsp</result>
+			<result name="input">userinfo.jsp</result>
+		</action>
+
+		<!-- 用户添加儿童 -->
+		<action name="addChildAction" class="addChildAction">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">data.jsp</result>
+			<result name="success4">data4.jsp</result>
+			<result name="input">child.jsp</result>
+			<result name="input4">child4.jsp</result>
+		</action>
+
+		<!-- 用户添加数据 -->
+		<action name="age2Action" class="age2Action">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">40960</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+			</result>
+		</action>
+
+		<!-- 用户添加数据4周岁 -->
+		<action name="age4_Action" class="age4Action">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">40960</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+			</result>
+		</action>
+
+		<!-- 获取当前用户 -->
+		<action name="getThisUserAction" class="com.kingmay.user.control.GetThisUserAction">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+		</action>
+
+		<!-- 用户下载pdf -->
+		<action name="download" class="com.kingmay.user.control.DownAction">
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">40960</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+			</result>
+		</action>
+
+		<!-- 处理数据Action -->
+		<action name="doExcelAction" class="com.kingmay.mutil.control.DoMutilAction">
+			<result name="input">upload.jsp</result>
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">40960</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+			</result>
+		</action>
+
+		<!-- 用户上传文件 -->
+		<action name="uploadAction" class="com.kingmay.mutil.control.UploadAction">
+			<interceptor-ref name="defaultStack">
+				<!-- 限制文件上传类型 -->
+				<!-- <param name="fileUpload.allowedTypes"> image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/x-png,image/pjpeg 
+					</param> -->
+				<param name="fileUpload.allowedExtensions">xls,xlsx</param>
+				<!-- 限制文件上传的大小 20m -->
+				<param name="fileUpload.maximumSize">20971520</param>
+			</interceptor-ref>
+			<interceptor-ref name="interceptorSuperAdmin" />
+			<result name="input">upload.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">doExcelAction</param>
+			</result>
+		</action>
+
+
+		<!-- 处理数据Action -->
+		<action name="doExcel2Action" class="com.kingmay.mutil.control.DoMutil2Action">
+			<result name="input">upload2.jsp</result>
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">40960</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+			</result>
+		</action>
+
+		<!-- 用户上传文件 2周岁 -->
+		<action name="upload2Action" class="com.kingmay.mutil.control.Upload2Action">
+			<interceptor-ref name="defaultStack">
+				<!-- 限制文件上传类型 -->
+				<!-- <param name="fileUpload.allowedTypes"> image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/x-png,image/pjpeg 
+					</param> -->
+				<param name="fileUpload.allowedExtensions">xls,xlsx</param>
+				<!-- 限制文件上传的大小 20m -->
+				<param name="fileUpload.maximumSize">20971520</param>
+			</interceptor-ref>
+			<interceptor-ref name="interceptorSuperAdmin" />
+			<result name="input">upload2.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">doExcel2Action</param>
+			</result>
+		</action>
+
+		<!-- 获取所有儿童表 -->
+		<action name="backChildAction" class="backChildAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">backchild.jsp</result>
+		</action>
+
+		<!-- 导出当前页原始分数 -->
+		<action name="outCurScoreAction" class="outCurScoreAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">40960</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+			</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">backChildAction</param>
+			</result>
+		</action>
+		
+		<!-- 获取所有儿童表 -->
+		<action name="rawScoreAction" class="rawScoreAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="input" type="redirectAction">
+				<param name="actionName">backChildAction</param>
+			</result>
+			<result name="age2">rawage2.jsp</result>
+			<result name="age4">rawage4.jsp</result>
+		</action>
+		
+		<!-- 到达修改原始分数页面 -->
+		<action name="goChangeDataAction" class="goChangeDataAction">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="2">canchange2.jsp</result>
+			<result name="4">canchange4.jsp</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">getThisChildAction</param>
+			</result>
+		</action>
+		
+		<!-- 用户修改2周岁数据 -->
+		<action name="canChange2Action" class="canChange2Action">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">40960</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+			</result>
+		</action>
+
+		<!-- 用户修改4周岁数据 -->
+		<action name="canChange4Action" class="canChange4Action">
+			<interceptor-ref name="interceptorUserLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">40960</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+			</result>
+		</action>
+		
+		
+		<!-- 到达忘记密码页面 -->
+		<action name="goForgetPwdAction" class="goForgetPwdAction">
+			<result name="input">goforget.jsp</result>
+			<result name="success">forget.jsp</result>
+		</action>
+		
+		<!-- 忘记密码页面 -->
+		<action name="getPwdAction" class="com.kingmay.user.control.GetPwdAction">
+			<result name="input">forget.jsp</result>
+			<result name="success">mypwd.jsp</result>
+		</action>
+		
+		<!-- 忘记密码后修改页面 -->
+		<action name="fgetChangePwdAction" class="fgetChangePwdAction">
+			<result name="input">mypwd.jsp</result>
+			<result name="success">success1.jsp</result>
+		</action>
+		
+		<!-- 到达管理员修改密码页面 -->
+		<action name="goAdminChangePwdAction" class="goAdminChangePwdAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">index.jsp</result>
+			<result name="input">changepwd_a.jsp</result>
+		</action>
+		
+		<!-- 到达管理员修改密码页面 -->
+		<action name="onlineUserAction" class="com.kingmay.admin.control.OnlineUserAction">
+			<result name="success">onlineuser.jsp</result>
+		</action>
+		
+	</package>
+</struts>

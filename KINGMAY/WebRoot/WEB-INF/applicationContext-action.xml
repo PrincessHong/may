@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+						
+	<!--管理员登录-->
+	<bean id="adminLoginAction" class="com.kingmay.adminlogin.control.AdminLoginAction" scope="prototype">
+		<property name="adminLoginDao" >
+			<ref bean="adminLoginDao"/>
+		</property>
+	</bean>		
+	
+	<!-- 添加主试 -->
+	<bean id="addUserAction" class="com.kingmay.admin.control.AddUserAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>	
+	
+	<!-- 查询培训班 -->	
+	<bean id="queryPeiAction" class="com.kingmay.pei.control.QueryPeiAction" scope="prototype">
+		<property name="peiDao" >
+			<ref bean="peiDao"/>
+		</property>
+	</bean>		
+	
+	<!-- 添加培训班 -->	
+	<bean id="addPeiAction" class="com.kingmay.admin.control.AddPeiAction" scope="prototype">
+		<property name="addPeiDao" >
+			<ref bean="addPeiDao"/>
+		</property>
+		<property name="peiDao" >
+			<ref bean="peiDao"/>
+		</property>
+	</bean>	
+	
+	<!-- 删除培训班 -->	
+	<bean id="delPeiAction" class="com.kingmay.admin.control.DelPeiAction" scope="prototype">
+		<property name="peiDao" >
+			<ref bean="peiDao"/>
+		</property>
+	</bean>
+	
+	<!-- 到达修改培训班页面 -->	
+	<bean id="goAdminPeiAction" class="com.kingmay.admin.control.GoAdminPeiAction" scope="prototype">
+		<property name="peiDao" >
+			<ref bean="peiDao"/>
+		</property>
+	</bean>
+	
+	<!-- 修改培训班-->
+	<bean id="adminPeiAction" class="com.kingmay.admin.control.AdminPeiAction" scope="prototype">
+		<property name="peiDao" >
+			<ref bean="peiDao"/>
+		</property>
+	</bean>
+	
+	<!-- 显示所有主试 -->
+	<bean id="allUserAction" class="com.kingmay.admin.control.ShowUsersAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 到达修改主试页面 -->	
+	<bean id="goAdminUserAction" class="com.kingmay.admin.control.GoAdminUserAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 修改主试 -->
+	<bean id="adminUserAction" class="com.kingmay.admin.control.AdminUserAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 删除主试 -->
+	<bean id="delUserAction" class="com.kingmay.admin.control.DelUserAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 主试登录 -->
+	<bean id="userLoginAction" class="com.kingmay.user.control.UserLoginAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 修改主试问题 -->
+	<bean id="userChangeQueAction" class="com.kingmay.user.control.ChangeQueAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 修改主试密码 -->
+	<bean id="userChangePwdAction" class="com.kingmay.user.control.ChangePwdAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 到达用户维护信息页面 -->
+	<bean id="goChangeInfoAction" class="com.kingmay.user.control.GoChangeInfoAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 用户维护信息 -->
+	<bean id="changeInfoAction" class="com.kingmay.user.control.ChangeInfoAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 用户添加测试儿童 -->
+	<bean id="addChildAction" class="com.kingmay.user.control.addChildAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 2周岁 -->
+	<bean id="age2Action" class="com.kingmay.score.control.Age2Action" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+		<property name="ageDao" >
+			<ref bean="ageDao"/>
+		</property>
+	</bean>
+	
+	<!-- 4 周岁 -->
+	<bean id="age4Action" class="com.kingmay.score.control.Age4Action" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+		<property name="ageDao" >
+			<ref bean="ageDao"/>
+		</property>
+	</bean>
+	
+	<!-- 获取当前用户 -->
+	<bean id="getThisUser" class="com.kingmay.user.control.GetThisUserChildAction" scope="prototype">
+		<property name="ageDao" >
+			<ref bean="ageDao"/>
+		</property>
+	</bean>
+	
+	<!-- 获取后台child -->
+	<bean id="backChildAction" class="com.kingmay.mutil.control.BackChildAction" scope="prototype">
+		<property name="ageDao" >
+			<ref bean="ageDao"/>
+		</property>
+	</bean>
+	
+	<!-- 导出当前页面原始分数 -->
+	<bean id="outCurScoreAction" class="com.kingmay.mutil.control.OutCurScoreAction" scope="prototype">
+		<property name="ageDao" >
+			<ref bean="ageDao"/>
+		</property>
+	</bean>
+	
+	<!-- 到达原始分数页面 -->
+	<bean id="rawScoreAction" class="com.kingmay.mutil.control.GoScoreAction" scope="prototype">
+		<property name="ageDao" >
+			<ref bean="ageDao"/>
+		</property>
+	</bean>
+	
+	<!-- 到达修改原始分数页面 -->
+	<bean id="goChangeDataAction" class="com.kingmay.user.control.GoChangeDataAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 更改2周岁 -->
+	<bean id="canChange2Action" class="com.kingmay.user.control.CanChange2Action" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+		<property name="ageDao" >
+			<ref bean="ageDao"/>
+		</property>
+	</bean>
+	
+	<!-- 更改2周岁 -->
+	<bean id="canChange4Action" class="com.kingmay.user.control.CanChange4Action" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+		<property name="ageDao" >
+			<ref bean="ageDao"/>
+		</property>
+	</bean>
+	
+	<!-- 到达忘记密码页面 -->
+	<bean id="goForgetPwdAction" class="com.kingmay.user.control.GOForgetPwdwordAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 到达忘记后修改密码页面 -->
+	<bean id="fgetChangePwdAction" class="com.kingmay.user.control.FgetChangePwdAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 到达管理员修改密码页面 -->
+	<bean id="goAdminChangePwdAction" class="com.kingmay.admin.control.GoChangePwdA" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+</beans>
