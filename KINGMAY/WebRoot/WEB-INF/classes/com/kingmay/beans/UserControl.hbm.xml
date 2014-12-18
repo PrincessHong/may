@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.kingmay.beans.UserControl" table="UserControl" >
+		<id name="cid">
+			<generator class="native" />
+		</id>
+		<property name="ccontrol" />
+		<property name="ccontent" />
+		<property name="ctime"/>
+		<property name="cip"/>
+	</class>
+</hibernate-mapping>

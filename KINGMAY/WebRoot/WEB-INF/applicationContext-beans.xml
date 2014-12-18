@@ -40,4 +40,11 @@
 		</property>
 	</bean>	
 	
+	<!--配置UserControlDao bean -->
+	<bean id="userControlDao" class="com.kingmay.usercontrol.dao.UserControlDao">
+		<property name="sessionFactory" >
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
 </beans>

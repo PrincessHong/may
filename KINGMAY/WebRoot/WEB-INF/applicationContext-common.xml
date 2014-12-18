@@ -60,6 +60,8 @@
 				<value>com/kingmay/beans/Age2.hbm.xml</value>
 				<value>com/kingmay/beans/Age4.hbm.xml</value>
 				<value>com/kingmay/beans/Pei.hbm.xml</value>
+				<value>com/kingmay/beans/UserControl.hbm.xml</value>
+				<value>com/kingmay/beans/MarkCount.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

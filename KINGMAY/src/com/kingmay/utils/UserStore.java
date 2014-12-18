@@ -1,7 +1,9 @@
 package com.kingmay.utils;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,5 +98,16 @@ public class UserStore {
 	           ip = request.getRemoteAddr();
 	       }
 	       return ip;
+	}
+	
+	/**
+	 * 格式化时间
+	 * @param d util.Date
+	 * @return
+	 */
+	public static String formatDate(Date d){
+		SimpleDateFormat simple_f = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String s = simple_f.format(d);
+		return s;
 	}
 }

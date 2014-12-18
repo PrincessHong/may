@@ -223,4 +223,17 @@
 		</property>
 	</bean>
 	
+	<!-- 检查用户是否存在 -->
+	<bean id="checkUserNameAction" class="com.kingmay.user.control.CheckUserNameAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<!-- 用户自我激活 -->
+	<bean id="userValidateAction" class="com.kingmay.usercontrol.control.UserValidateAction" scope="prototype">
+		<property name="userDao" >
+			<ref bean="userDao"/>
+		</property>
+	</bean>
 </beans>

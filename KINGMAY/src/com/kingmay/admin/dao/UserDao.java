@@ -576,4 +576,75 @@ public class UserDao {
 			session.close();
 		}
 	}
+	
+	/**
+	 * 用户自行激活
+	 * @param u User
+	 * @return boolean
+	 * */
+	/**
+	 * 修改主试信息
+	 * @param user
+	 * @return boolean
+	 * */
+	public boolean vaildateUser(User user){
+		Session session=null;
+		Transaction transaction=null;
+		try{
+			session=sessionFactory.openSession();
+			transaction=session.beginTransaction();
+			String queryString="from User where uid=?";
+			Query queryObject=session.createQuery(queryString);
+			queryObject.setParameter(0, user.getUid());
+			List<User> l = queryObject.list();
+			if(l.size() == 1){
+				User u = (User)l.get(0);
+				u.setUlname(user.getUlname());
+				u.setUlpwd(user.getUlpwd());
+				u.setUque(user.getUque());
+				u.setUans(user.getUans());
+				u.setUname(user.getUname());
+				u.setUiden(user.getUiden());
+				u.setUemail(user.getUemail());
+				u.setUren("已认证");
+				session.update(u);
+				transaction.commit();
+				return true;
+			}else{
+				return false;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			return  false;
+		}finally{
+			session.close();
+		}
+	}
+	
+	/**
+	 * 通过ulname查询主试
+	 * @param ulname
+	 * @return User
+	 * */
+	public boolean noUlname(String ulname){
+		Session session=null;
+		try{
+			session=sessionFactory.openSession();
+			String queryString="from User where ulname=?";
+			Query queryObject=session.createQuery(queryString);
+			queryObject.setParameter(0, ulname);
+			List<User> list=queryObject.list();
+			if(list.size() >= 1){
+//				return list.get(0);
+				return false;
+			}else{
+				return true;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally{
+			session.close();
+		}
+	}
 }

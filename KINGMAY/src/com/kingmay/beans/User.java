@@ -10,7 +10,7 @@ public class User {
 	private String uname;
 	private String uque;
 	private String uans;
-	private int ucanuse = 3;
+	private int ucanuse = 0;
 	private int uused = 0;
 	private int ucanuse4 = 0;
 	private int uused4 = 0;

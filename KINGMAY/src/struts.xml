@@ -409,5 +409,14 @@
 			<result name="success">onlineuser.jsp</result>
 		</action>
 		
+		<!-- 用户自我激活 -->
+		<action name="userValidateAction" class="userValidateAction">
+			<result name="success">success1.jsp</result>
+			<result name="input">uservalidate.jsp</result>
+		</action>
+		
+		
+		
 	</package>
+	<include file="struts1.xml"></include>
 </struts>
