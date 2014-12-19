@@ -7,6 +7,7 @@
 <meta http-equiv="keywords" content="seal">
 <meta http-equiv="description" content="seal">
 <meta charset="utf-8">
+<link rel="Shortcut Icon" href="http://www.king-may.com.cn/favicon.ico">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/libs/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/data.css" >
 
