@@ -49,7 +49,7 @@
 					<tr>
 						<td>登录名</td>
 						<td><input type="text" class="form-control" name="u.ulname"
-							required autocomplete="off">
+							 autocomplete="off">
 						</td>
 						<td>密码</td>
 						<td><input type="text" class="form-control" id="ulpwd"
