@@ -114,20 +114,35 @@
 							</div></td>
 					</tr>
 					<tr>
-						<td>原版记分服务总数</td>
-						<td class="original"><input type="number"
+						<td>2:6-3:11岁记分服务总数</td>
+						<td class="original">
+						<span>可使用</span>
+						<input type="number"
 							class="form-control" name="u.ucanuse" id="ucanuse"
 							style="width:80px" required> <span>增加</span> <input
 							type="number" class="form-control" id="adduse" style="width:80px"
 							name="adduse" value="0"> <span>减少</span> <input
-							type="number" class="form-control" name="u.uused" id="uused"
-							style="width:80px">
+							type="number" class="form-control" name="reduce" id="reduce"
+							style="width:80px" value="0">
 						</td>
-						<td>备注</td>
-						<td>
-							<textarea rows="2" class="form-control" id="ubei" name="u.ubei"></textarea>
-						</td>
+						<td>4:0-3:11岁记分服务总数</td>
+                    	<td class="original">
+                    	<span>可使用</span>
+                    	<input type="number"
+                    		class="form-control" name="u.ucanuse4" id="ucanuse4"
+                    		style="width:80px" required> <span>增加</span> <input
+                    		type="number" class="form-control" id="adduse4" style="width:80px"
+                    		name="adduse4" value="0"> <span>减少</span> <input
+                    		type="number" class="form-control" name="reduce4" id="reduce4"
+                    		style="width:80px" value="0">
+                    	</td>
 					</tr>
+					<tr>
+                    	<td>备注</td>
+                    	<td colspan="3">
+                    		<textarea rows="3" class="form-control" id="ubei" name="u.ubei"></textarea>
+                    	</td>
+                    </tr>
 					<tr class="success">
 						<td>E-mail地址</td>
 						<td><input type="email" class="form-control" id="email"
