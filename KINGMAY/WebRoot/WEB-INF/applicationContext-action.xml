@@ -236,4 +236,26 @@
 			<ref bean="userDao"/>
 		</property>
 	</bean>
+	
+	<!-- 查看用户操作 -->
+	<bean id="showControlAction" class="com.kingmay.usercontrol.control.ShowControlAction" scope="prototype">
+		<property name="userControlDao" >
+			<ref bean="userControlDao"/>
+		</property>
+	</bean>
+	
+	<!-- 查看记分操作数量 -->
+	<bean id="showMarkCountAction" class="com.kingmay.usercontrol.control.ShowMarkCountAction" scope="prototype">
+		<property name="userControlDao" >
+			<ref bean="userControlDao"/>
+		</property>
+	</bean>
+	
+	<!-- 搜索儿童 -->
+	<bean id="searchChildAction" class="com.kingmay.admin.control.SearchChildAction" scope="prototype">
+		<property name="ageDao" >
+			<ref bean="ageDao"/>
+		</property>
+	</bean>
+	
 </beans>

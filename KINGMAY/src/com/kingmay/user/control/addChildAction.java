@@ -47,9 +47,9 @@ public class addChildAction extends ActionSupport{
 		HttpSession session = request.getSession();
 		User u = (User) session.getAttribute("user");
 		
-		if(u.getUcanuse()- u.getUused() <=0){
-			return INPUT;
-		}
+		int sum2 = u.getUcanuse() + u.getUused();
+		int sum4 = u.getUcanuse4() + u.getUused4();
+		
 		
 		int year,month,day,ctyear,ctmonth,ctday,cbyear,cbmonth,cbday;
 		ctyear = c.getCtyear();
@@ -74,11 +74,33 @@ public class addChildAction extends ActionSupport{
 		month = ctmonth - cbmonth;
 		year = ctyear - cbyear;
 		
+		if(year >= 4){
+			if( sum4 - u.getUused4() <=0){
+				System.out.println("次数不够");
+				return INPUT;
+			}
+		}else{
+			if(sum2 - u.getUused() <=0){
+				System.out.println("次数不够");
+				return INPUT;
+			}
+		}
+		
+		
 		//儿童编号设置
 		String ccid = "";
-		int ucanused = u.getUused()+1;
 		String uuid = u.getUid();
+		int ucanused = u.getUused()+1;
+		if(year >= 4){
+			ucanused = u.getUused4()+1;
+			uuid = uuid+"4";
+		}else{
+			uuid = uuid+"2";
+		}
 		ccid = uuid+"000"+ucanused;
+		
+		System.out.println("ccid -->"+ccid);
+		
 		if(ucanused >= 10 && ucanused <100){
 			ccid = uuid+"00"+ucanused;
 		}else if(ucanused >= 100 && ucanused <1000){
@@ -92,6 +114,9 @@ public class addChildAction extends ActionSupport{
 		c.setCmonth(month);
 		c.setCday(day);
 		session.setAttribute("child",c);
+		System.out.println("c child id "+c.getCid());
+		
+		
 		if(userDao.addChild(c)){
 			if(year>=4){
 				return "success4";

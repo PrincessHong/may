@@ -53,15 +53,15 @@ public class GoScoreAction extends ActionSupport{
 			return INPUT;
 		}
 		if(o instanceof Age2){
-			System.out.println("2");
+//			System.out.println("2");
 			age2 = (Age2)o;
 			return "age2";
 		}else if(o instanceof Age4){
-			System.out.println("4");
+//			System.out.println("4");
 			age4 = (Age4)o;
 			return "age4";
 		}else{
-			System.out.println("null");
+//			System.out.println("null");
 			return INPUT;
 		}
 	}

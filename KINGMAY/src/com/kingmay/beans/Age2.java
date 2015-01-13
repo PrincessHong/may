@@ -1320,7 +1320,15 @@ public class Age2 {
 				this.fsiq += this.pml;
 			}
 			if(this.bd == -1 || this.inf == -1 || this.oa == -1){
-				this.fsiq = -1;
+//				this.fsiq = -1;
+				if(this.bd == -1){
+					this.fsiq += this.infl + this.oal; 
+				}else if (this.inf == -1) {
+					this.fsiq += this.bdl + this.oal; 
+				}else if (this.oa == -1) {
+					this.fsiq += this.bdl + this.infl; 
+				}
+				this.fsiq = A1226_311.a[this.fsiq -4 ];
 			}
 //			float a =B11.cpi_b_gai[0-1];
 		}
@@ -2668,7 +2676,7 @@ public class Age2 {
 							this.wmizsfsjcl ="10%";
 						}
 					}else if(Math.abs(this.wmizsfscy) > B2.wmi_mis10 && Math.abs(this.wmizsfscy) <= B2.wmi_mis5){
-						this.vcizsfsjcl = "5-10%";
+						this.wmizsfsjcl = "5-10%";
 						if(Math.abs(this.wmizsfscy) == B2.wmi_mis5){
 							this.wmizsfsjcl ="5%";
 						}
@@ -3032,7 +3040,7 @@ public class Age2 {
 					}
 				}
 			}
-			
+			System.out.println("wmi jcl :"+this.wmizsfsjcl);
 		}else{
 			this.zszf3 = -1;
 		}
@@ -4701,7 +4709,7 @@ public class Age2 {
 			//mark2
 			//分测验水平 强项与弱项确定表2
 			//5个无缺失
-			this.zsfs5 = this.fsiq;
+			this.zsfs5 = this.rvl + this.infl + this.pml + this.oal + this.bdl;
 			this.zsfs5jz = change2((float)zsfs5 / 5);
 			this.zsfs5fsd = com_fen_q();
 			
@@ -5709,9 +5717,9 @@ public class Age2 {
 			//mark2 end;
 		}
 		if(this.fsiq == -1){
-			this.zsfs5 = -1;
-			this.zsfs5jz = -1f;
-			this.zsfs5fsd = -1;
+//			this.zsfs5 = -1;
+//			this.zsfs5jz = -1f;
+//			this.zsfs5fsd = -1;
 		}
 	}
 	

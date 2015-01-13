@@ -12,9 +12,11 @@ import com.kingmay.admin.dao.UserDao;
 import com.kingmay.beans.Age4;
 import com.kingmay.beans.Child;
 import com.kingmay.beans.User;
+import com.kingmay.beans.UserControl;
 import com.kingmay.pdf.Create2pdf;
 import com.kingmay.pdf.Create4pdf;
 import com.kingmay.score.dao.AgeDao;
+import com.kingmay.utils.UserStore;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class Age4Action extends ActionSupport{
@@ -87,10 +89,12 @@ public class Age4Action extends ActionSupport{
 			return INPUT;
 		}
 		User u = (User) session.getAttribute("user");
-		u.setUused(u.getUused()+1);
+		u.setUused4(u.getUused4()+1);
+		u.setUcanuse4(u.getUcanuse4()-1);
+		
+		System.out.println("ucanused:"+u.getUcanuse4()+" used"+u.getUused4());
 		userDao.updateUser(u);
 		session.setAttribute("user", u);
-		
 		Age4 a = new Age4(age.getBd(),age.getInf(),age.getMr(), age.getBs(),age.getSp(),age.getPm() ,age.getSi(),age.getPc(),age.getCa(),age.getZl(),age.getOa() ,age.getAc() ,age.getRv(), age.getPn(), age.getCar(), age.getCas(), age.getSsp(),age.getBjjc(), age.getJsff() ,age.getQsjsff(),c);
 		a.setCid(c.getCid());
 		Create4pdf pdf = new Create4pdf();
@@ -102,6 +106,15 @@ public class Age4Action extends ActionSupport{
 		userDao.updateChild(c,0);
 		session.removeAttribute("child");
 		ageDao.addAge4(a);
+		
+		//2014.12.19
+		UserControl uc = new UserControl();
+		uc.setCcontrol("数据录入");
+		uc.setCcontent("主试：【"+u.getUid()+"】录入4:0-6:11岁记分记录【"+c.getCid()+"】");
+		uc.setCtime(u.getUlast());
+		uc.setCip(UserStore.getIpAddr(request));
+		userDao.AddUserControl(uc);
+		
 		return super.execute();
 	}
 }

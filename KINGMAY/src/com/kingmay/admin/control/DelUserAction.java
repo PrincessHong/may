@@ -28,7 +28,7 @@ public class DelUserAction extends ActionSupport{
 	@Override
 	public String execute() throws Exception {
 		uid = java.net.URLDecoder.decode(uid,"UTF-8");
-		System.out.println("uid-->" + uid);
+//		System.out.println("uid-->" + uid);
 		if(userDao.delUserByUid(uid)){
 			return SUCCESS;
 		}else{

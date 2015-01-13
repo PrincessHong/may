@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" import="com.kingmay.utils.ValidataCode"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -10,6 +11,7 @@
 <html>
 <head>
 <title>京美心理测量管理员登录</title>
+<base href="<%=basePath%>">
 <jsp:include page="../end-libs.jsp"></jsp:include>
 <style>
 .img-w-logo {
@@ -37,48 +39,68 @@
 	<div style="height:60px"></div>
 
 	<div id="main-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-4">
-					<section>
-						<div style="height:180px"></div>
-					<img src="../images/logo.jpg" class="img-rounded"> 
-					<img src="../images/w-logo-ch.png" class="img-w-logo">
-					</section>
-
+		<div class="login-container">
+			<div class="login-left pull-left">
+				<section>
+					<div style="height:180px"></div>
+					<img src="images/logo.jpg" class="img-rounded"> <img
+						src="images/w-logo-ch.png" class="img-w-logo">
+				</section>
+			</div>
+			<div class="login-right pull-right">
+				<div style="height:70px"></div>
+				<div align="center">
+					<h2>
+						<b>管理员登录</b>
+					</h2>
 				</div>
-				<div class="col-md-1"></div>
-				<div class="col-md-6">
-					<div class="col-md-6">
-						<div style="height:70px"></div>
-						<div align="center">
-							<h2>
-								<b>管理员登录</b>
-							</h2>
-						</div>
-						<div style="height:30px"></div>
+				<div style="height:25px"></div>
+				<div class="row wronginfo">
+					<div id="adminWrongShow" class="col-sm-9 pull-right">
 						<%
-							if(request.getAttribute("msg")!=null){
+							if (request.getAttribute("msg") != null) {
 								out.println(request.getAttribute("msg"));
 							}
 						%>
-						<form action="adminLoginAction" method = "post" role="form" >
-							<div class="form-group">
-								<label for="managerName">账户</label> <input type="text"
-									class="form-control" name="aa.aname" id="managerName" required placeholder="账户" >
-							</div>
-							
-							<div class="form-group">
-								<label for="manPwd">密码</label> <input
-									type="password" class="form-control" name="aa.apwd" id="manPwd"
-									placeholder="密码" required>
-							</div>
-							<button type="submit" class="btn btn-default">登录</button>
-							<button type="reset" class="btn btn-default">重置</button>
-						</form>
 					</div>
 				</div>
+				<form action="manager/adminLoginAction" method="post" role="form"
+					class="form-horizontal">
+					<div class="form-group">
+						<label for="managerName" class="col-sm-3">账户:</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="aa.aname"
+								id="managerName" required placeholder="请输入账户">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="manPwd" class="col-sm-3">密码:</label>
+						<div class="col-sm-9">
+							<input type="password" class="form-control col-sm-9"
+								name="aa.apwd" id="manPwd" placeholder="请输入密码" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="manPwd" class="col-sm-3">验证码:</label>
+						<div class="col-sm-5">
+							<input type="text" placeholder="请输入验证码" name="validataCode"
+								id="validataCode" class="form-control" />
+						</div>
+						<div class="col-sm-4">
+							<a href="javascript:void(0)" title="点击刷新验证码"
+								onclick="refreshCode()" id="validataCode"> <img
+								style="width:90px; height: 30px;border:1px silver solid;"
+								src="randomCode"> </a>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="pull-right">
+							<button type="submit" class="btn btn-default">登录</button>
+							<button type="reset" class="btn btn-default">重置</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -94,5 +116,7 @@
 		</div>
 		<div style="height:10px"></div>
 	</nav>
+	<script src="js/common.js"></script>
+
 </body>
 </html>

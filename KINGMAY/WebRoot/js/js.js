@@ -22,3 +22,11 @@ function deluser(uid){
 		location.href = "delUserAction.action?uid="+encodeURI(encodeURI(uid));
 	}
 }
+
+//通过姓名id模糊查询儿童
+function SearchChildById_Name(){
+	var search_id=$("#search_id").val();
+	var search_name=$("#search_name").val();
+//	alert(encodeURI(search_id));
+//	location.href = "delUserAction.action?uid="+encodeURI(encodeURI(uid));
+}

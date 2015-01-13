@@ -10,7 +10,7 @@ public class DBCon {
 	public static Connection DBconnection(){
 		try{
 		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=king_may","sa", "cam510");
+		Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName=king_may2","sa", "cam510");
 		return con;
 	}catch(Exception ex){
 		ex.printStackTrace();
@@ -42,7 +42,7 @@ public class DBCon {
 		}
 		}catch(Exception ex)
 		{
-			System.out.println("1"+ex.toString());
+//			System.out.println("1"+ex.toString());
 			return null;
 		}
 		return l;
@@ -71,7 +71,7 @@ public class DBCon {
 		}
 		}catch(Exception ex)
 		{
-			System.out.println("2"+ex.toString());
+//			System.out.println("2"+ex.toString());
 			return null;
 		}
 		return l;
@@ -93,7 +93,7 @@ public class DBCon {
 		}
 		}catch(Exception ex)
 		{
-			System.out.println("3"+ex.toString());
+//			System.out.println("3"+ex.toString());
 			return null;
 		}
 		return l;

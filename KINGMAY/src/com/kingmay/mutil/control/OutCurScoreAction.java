@@ -92,9 +92,9 @@ public class OutCurScoreAction extends ActionSupport{
 		List<Object> l = new ArrayList<Object>();
 		l = ageDao.QueryAge(childs);
 		if(l.get(0) instanceof Age2){
-			System.out.println("2");
+//			System.out.println("2");
 		}else if(l.get(0) instanceof Age4){
-			System.out.println("4");
+//			System.out.println("4");
 		}
 		
 		DoExcel.write_Yuan(childs,l);
@@ -111,10 +111,10 @@ public class OutCurScoreAction extends ActionSupport{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
 		childs = (List<Child>) session.getAttribute("childs");
-		System.out.println("childs size--->"+childs.size());
+//		System.out.println("childs size--->"+childs.size());
 		if(childs != null){
 		}else{
-			System.out.println("null");
+//			System.out.println("null");
 		}
 		
 	}

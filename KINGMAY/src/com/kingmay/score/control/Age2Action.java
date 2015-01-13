@@ -12,8 +12,10 @@ import com.kingmay.admin.dao.UserDao;
 import com.kingmay.beans.Age2;
 import com.kingmay.beans.Child;
 import com.kingmay.beans.User;
+import com.kingmay.beans.UserControl;
 import com.kingmay.pdf.Create2pdf;
 import com.kingmay.score.dao.AgeDao;
+import com.kingmay.utils.UserStore;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class Age2Action extends ActionSupport{
@@ -81,6 +83,9 @@ public class Age2Action extends ActionSupport{
 		}
 		User u = (User) session.getAttribute("user");
 		u.setUused(u.getUused()+1);
+		u.setUcanuse(u.getUcanuse()-1);
+		
+		System.out.println("ucanused:"+u.getUcanuse()+" used"+u.getUused());
 		userDao.updateUser(u);
 		session.setAttribute("user", u);
 		Age2 a = new Age2(age.getRv(),age.getBd(),age.getPm(),age.getInf(),age.getOa(),age.getZl(),age.getPn(),age.getSp(),age.getSsp(),age.getBjjc(),age.getJsff(),c);
@@ -94,6 +99,15 @@ public class Age2Action extends ActionSupport{
 		userDao.updateChild(c,0);
 		session.removeAttribute("child");
 		ageDao.addAge2(a);
+		
+		//2014.12.19
+		UserControl uc = new UserControl();
+		uc.setCcontrol("数据录入");
+		uc.setCcontent("主试：【"+u.getUid()+"】录入2:6-3:11岁记分记录【"+c.getCid()+"】");
+		uc.setCtime(u.getUlast());
+		uc.setCip(UserStore.getIpAddr(request));
+		userDao.AddUserControl(uc);
+		
 		return super.execute();
 	}
 }

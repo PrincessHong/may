@@ -32,7 +32,7 @@ public class GetPwdAction extends ActionSupport{
 
 	@Override
 	public String execute() throws Exception {
-		System.out.println("ans-->"+ans +" u.getuans-->"+u.getUans());
+//		System.out.println("ans-->"+ans +" u.getuans-->"+u.getUans());
 		if(u.getUans().equals(ans)){
 			return SUCCESS;
 		}else{

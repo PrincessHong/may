@@ -12,8 +12,8 @@
 %>
 
 <!DOCTYPE html>
-<html>
-<head lang="zh-CN">
+<html lang="zh-CN">
+<head>
 <jsp:include page="lib.jsp"></jsp:include>
 </head>
 <body>

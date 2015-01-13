@@ -23,18 +23,23 @@
 			$(this).toggleClass("selected");		  
 			$(this).siblings('.child' + this.id).toggle();
 		}).click();
-		$('.parent').css('background', '#BCDEE9');
 	});
 	
 </script>
 
 <style type="text/css">
-.parent1 {
+/* .parent1 {
 	background: #E3F3F9
 }
 
 .parent1.selected {
 	background: #65A3E0
+} */
+.parent:hover {
+	cursor: pointer;
+}
+.parent1:hover {
+	cursor: pointer;
 }
 </style>
 <body class="easyui-layout">

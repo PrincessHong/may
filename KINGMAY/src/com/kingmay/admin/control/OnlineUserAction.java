@@ -23,7 +23,7 @@ public class OnlineUserAction extends ActionSupport{
 	public String execute() throws Exception {
 		onlineUserList = UserStore.getOnlineUsers();
 		if(onlineUserList != null){
-			System.out.println(""+onlineUserList.size());
+//			System.out.println(""+onlineUserList.size());
 		}
 		return SUCCESS;
 	}

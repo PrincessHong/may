@@ -38,7 +38,7 @@ public class GoAdminPeiAction extends ActionSupport{
 	@Override
 	public String execute() throws Exception {
 		pname = java.net.URLDecoder.decode(pname,"UTF-8");
-		System.out.println("pname-->"+pname);
+//		System.out.println("pname-->"+pname);
 		p = peiDao.QueryPeiByPname(pname);
 		if(p!=null){
 			this.setP(p);

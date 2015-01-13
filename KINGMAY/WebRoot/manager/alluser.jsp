@@ -10,8 +10,8 @@
 %>
 
 <!DOCTYPE HTML>
-<html>
-<head lang="zh-CN">
+<html lang="zh-CN">
+<head>
 <base href="<%=basePath%>">
 <title>主试列表</title>
 
@@ -28,14 +28,14 @@
 					role="button">刷新列表</a>
 			</div>
 			<div style="height:10px"></div>
-			<table class="table table-striped  table-hover">
+			<table class="table table-striped table-hover">
 				<tr>
 					<th>主试编号</th>
 					<th>主试姓名</th>
 					<th>登录名</th>
-					<th>总记分册</th>
-					<th>已用记分册</th>
-					<th>剩余记分册</th>
+					<th>总记分册 2/4</th>
+					<th>已用记分册 2/4</th>
+					<th>剩余记分册 2/4</th>
 					<th>激活状态</th>
 					<th>操作</th>
 				</tr>
@@ -45,9 +45,9 @@
 							valign="middle">${user.uid}</td>
 						<td>${user.uname }</td>
 						<td>${user.ulname}</td>
-						<td>${user.ucanuse }</td>
-						<td>${user.uused }</td>
-						<td>${user.ucanuse- user.uused}</td>
+						<td>${user.ucanuse + user.uused} | ${user.ucanuse4 + user.uused4}</td>
+						<td>${user.uused } | ${user.uused4 }</td>
+						<td>${user.ucanuse} | ${user.ucanuse4}</td>
 						<td>${user.uren }</td>
 						<td width="120px">
 							<button type="button" class="btn btn-primary btn-xs"
@@ -58,20 +58,22 @@
 					</tr>
 				</s:iterator>
 			</table>
-			<div class="page">
-				[<a href="manager/allUserAction.action?pageNo=1">首页</a>]
+			<nav>
+			<ul class="pager">
+				<li><a href="manager/allUserAction.action?pageNo=1">首页</a></li>
 				<c:choose>
 					<c:when test="${currentPage>1}">
-					[<a href="manager/allUserAction.action?pageNo=${currentPage-1}">上一页</a>]
+					<li><a href="manager/allUserAction.action?pageNo=${currentPage-1}">上一页</a></li>
 				</c:when>
 				</c:choose>
 				<c:choose>
 					<c:when test="${currentPage<totalPage}">
-					[<a href="manager/allUserAction.action?pageNo=${currentPage+1}">下一页</a>]
+					<li><a href="manager/allUserAction.action?pageNo=${currentPage+1}">下一页</a></li>
 				</c:when>
 				</c:choose>
-				[<a href="manager/allUserAction.action?pageNo=${totalPage}">尾页</a>]
-			</div>
+				<li><a href="manager/allUserAction.action?pageNo=${totalPage}">尾页</a></li>
+			</ul>
+			</nav>
 		</div>
 
 	</div>

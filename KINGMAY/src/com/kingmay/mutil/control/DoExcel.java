@@ -3106,6 +3106,10 @@ public class DoExcel {
 		dxqdHeadYuan(sheet, xwb , alist , clist);  
 		String path = setlast(new Date());
 		String filePath=ServletActionContext.getServletContext().getRealPath("download")+"\\"+ path+".xlsx";
+		File f = new File(ServletActionContext.getServletContext().getRealPath("download"));
+		if(!f.exists()){
+			f.mkdir();
+		}
 		try {
 			xwb.write(new FileOutputStream(filePath));
 		} catch (FileNotFoundException e) {
@@ -3125,7 +3129,7 @@ public class DoExcel {
     	List<Child> c_2 = new ArrayList<Child>();
     	List<Child> c_4 = new ArrayList<Child>();
     	
-    	for(int i = 0 ; i < clist.size() ; i++){
+    	for(int i = 0 ; i < alist.size() ; i++){
     		if(alist.get(i) instanceof Age2){
     			l_2.add((Age2)alist.get(i));
     			c_2.add(clist.get(i));
@@ -3490,7 +3494,7 @@ public class DoExcel {
     	Row header = sheet.createRow(row);
 		Cell cell = header.getCell(0);
 		XSSFCellStyle style = xwb.createCellStyle();
-		System.out.println("write4 score");
+//		System.out.println("write4 score");
 		createCell(xwb, header, 0, ""); 
 		
 		createCell(xwb, header, 1, "¼Ç·Ö²áÊ×Ò³"); 

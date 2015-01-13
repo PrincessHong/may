@@ -23,6 +23,7 @@ public class BackChildAction extends ActionSupport{
 	private int page = 0;
 	private int currentPa  = 1;
 	
+	
 	public List<Child> getChilds() {
 		return childs;
 	}

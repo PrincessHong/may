@@ -37,7 +37,7 @@ public class UserValidateAction extends ActionSupport{
 
 	@Override
 	public String execute() throws Exception {
-		System.out.println(u.getUid());
+//		System.out.println(u.getUid());
 		User uu = userDao.QueryUserByUid(u.getUid());
 		if(uu == null){
 			return INPUT;

@@ -10,8 +10,8 @@
 %>
 
 <!DOCTYPE HTML>
-<html>
-<head lang="zh-CN">
+<html lang="zh-CN">
+<head>
 <jsp:include page="lib.jsp"></jsp:include>
 </head>
 
@@ -68,7 +68,6 @@
 				<div class="col-md-5">
 					<div class="info">
 						<div class="panel panel-warning">
-
 							<div class="panel-heading">账号信息</div>
 							<div class="panel-body">
 								<div style="padding:20px;font-size:17px">
@@ -76,13 +75,25 @@
 										<span>主试编号：</span><label><%=user.getUid()%></label>
 									</div>
 									<div>
-										<span>可用记分服务数：</span><label><%=user.getUcanuse()%>份</label>
+										<span>可用记分服务数：</span>
 									</div>
 									<div>
-										<span>已用记分服务数：</span><label><%=user.getUused()%>份</label>
+										<span>—— 2:6 - 3:11岁 : </span><label><%=user.getUcanuse()%>份</label>
 									</div>
 									<div>
-										<span>报告结果：</span><label><%=user.getUused()%></label>
+										<span>—— 4:0 - 6:11岁 : </span><label><%=user.getUcanuse4()%>份</label>
+									</div>
+									<div>
+										<span>已用记分服务数：</span>
+									</div>
+									<div>
+										<span>—— 2:6 - 3:11岁 : </span><label><%=user.getUused()%>份</label>
+									</div>
+									<div>
+										<span>—— 4:0 - 6:11岁 : </span><label><%=user.getUused4()%>份</label>
+									</div>
+									<div>
+										<span>报告结果：</span><label><%=user.getUused()+user.getUused4()%></label>
 									</div>
 									<div>
 										<span>上次登录：</span><label><%=user.getUlast()%></label>
@@ -103,50 +114,56 @@
 
 					<div class="panel panel-warning">
 						<div class="panel-heading">已提交记分数据列表</div>
-						<div class="panel-body">
-							<table class="table table-striped">
-								<tr>
-									<th scope="col">编号</th>
-									<th scope="col">儿童姓名</th>
-									<th scope="col">编辑</th>
-									<th scope="col">下载</th>
-									<th scope="col">时间</th>
-								</tr>
+						<table class="table table-hover">
+							<tr>
+								<th scope="col">编号</th>
+								<th scope="col">儿童姓名</th>
+								<th scope="col">编辑</th>
+								<th scope="col">下载</th>
+								<th scope="col">时间</th>
+							</tr>
 
-								<s:iterator value="childs" status="st" id="c">
-									<tr>
-										<td>${c.cid }</td>
-										<td>${c.cname}</td>
-										<td>
-										 <c:choose>
-								<c:when test="${c.canchange == 0}">
-									<a href="goChangeDataAction.action?cid=${c.cid }">修改</a>  
-								</c:when>
-							</c:choose>
-							<c:choose>
-								<c:when test="${c.canchange == 1}">
-									<p>修改</p>
-								</c:when>
-							</c:choose>
-										</td>
-										<td><a href="download.action?path=${c.curl }">下载</a></td>
-										<td>${c.cctime}</td>
-									</tr>
-								</s:iterator>
-							</table>
-							[<a href="getThisChildAction.action?pageN=1">首页</a>]
-							<c:choose>
-								<c:when test="${currentPag>1}">
-					[<a href="getThisChildAction.action?pageN=${currentPag-1}">上一页</a>]
-				</c:when>
-							</c:choose>
-							<c:choose>
-								<c:when test="${currentPag<totalPag}">
-					[<a href="getThisChildAction.action?pageN=${currentPag+1}">下一页</a>]
-				</c:when>
-							</c:choose>
-							[<a href="getThisChildAction.action?pageN=${totalPag}">尾页</a>]
-						</div>
+							<s:iterator value="childs" status="st" id="c">
+								<tr>
+									<td>${c.cid }</td>
+									<td>${c.cname}</td>
+									<td><c:choose>
+											<c:when test="${c.canchange == 0}">
+												<a href="goChangeDataAction.action?cid=${c.cid }">修改</a>
+											</c:when>
+										</c:choose> <c:choose>
+											<c:when test="${c.canchange == 1}">
+												<p>修改</p>
+											</c:when>
+										</c:choose>
+									</td>
+									<td><a href="download.action?path=${c.curl }">下载</a></td>
+									<td>${c.cctime}</td>
+								</tr>
+							</s:iterator>
+						</table>
+						<nav>
+							<ul class="pager">
+								<li><a href="getThisChildAction.action?pageN=1">首页</a>
+								</li>
+								<c:choose>
+									<c:when test="${currentPag>1}">
+										<li><a
+											href="getThisChildAction.action?pageN=${currentPag-1}">上一页</a>
+										</li>
+									</c:when>
+								</c:choose>
+								<c:choose>
+									<c:when test="${currentPag<totalPag}">
+										<li><a
+											href="getThisChildAction.action?pageN=${currentPag+1}">下一页</a>
+										</li>
+									</c:when>
+								</c:choose>
+								<li><a href="getThisChildAction.action?pageN=${totalPag}">尾页</a>
+								</li>
+							</ul>
+						</nav>
 					</div>
 				</div>
 				<div class="col-md-1"></div>

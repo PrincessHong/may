@@ -31,7 +31,7 @@ public class AddPeiAction extends ActionSupport{
 	}
 	@Override
 	public String execute() throws Exception {
-		System.out.println(p.getPname()+p.getPchild()+p.getPnotify()+p.getPshunxu()+p.getPtype());
+//		System.out.println(p.getPname()+p.getPchild()+p.getPnotify()+p.getPshunxu()+p.getPtype());
 		if(p.getPtype() == 4 ){
 			return INPUT;
 		}

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import com.kingmay.table.A10;
 import com.kingmay.table.A11;
+import com.kingmay.table.A1226_311;
 import com.kingmay.table.A13;
 import com.kingmay.table.A43_45;
 import com.kingmay.table.A46_48;
@@ -2098,7 +2099,7 @@ public class Age4{
 		int count0 = ct[0] , count1 = ct[1];
 		
 		//3个0分内没缺失
-		if(count0 < 1 && count1 < 1){
+		if(count0 <= 3 && count1 < 1){
 			this.fsiq = this.bdl + this.infl + this.mrl + this.bsl + this.pml + this.sil;
 		}
 		
@@ -2156,6 +2157,8 @@ public class Age4{
 						this.fsiq += this.zll;
 					}
 				}
+			}else if(this.bd != -1 && this.mr != -1 && this.bs != -1 && this.pm != -1){
+				this.fsiq = this.bdl + this.mrl + this.bsl + this.pml;
 			}
 			
 			if(this.inf != -1){
@@ -2165,7 +2168,9 @@ public class Age4{
 				this.fsiq += this.sil;
 			}
 			if(this.inf == -1 || this.si == -1){
-				this.fsiq = -1;
+//				this.fsiq = -1;
+				System.out.println("this.fsiq = "+this.fsiq);
+				this.fsiq = A13.a[this.fsiq - 5];
 			}
 		}
 		
@@ -2363,15 +2368,19 @@ public class Age4{
 			}
 			if(this.ca != -1){
 				this.cpi += this.cal;
+			}else{
+				this.cpi += this.acl;
 			}
 			if(this.bs != -1){
 				this.cpi += this.bsl;
 			}else{
-				if(this.qsjsff == 0 ){
-					this.cpi = -1;
-				}else if(this.qsjsff == 1 && this.ac != -1){
-					this.cpi += this.acl;
-				}
+//				if(this.qsjsff == 0 ){
+//					this.cpi = -1;
+//				}else if(this.qsjsff == 1 && this.ac != -1){
+//					this.cpi += this.acl;
+//				}
+				this.cpi += this.acl;
+				
 			}
 			if(this.pm == -1 || this.ca == -1 || this.zl == -1){
 				this.cpi = -1;
@@ -2549,6 +2558,20 @@ public class Age4{
 		int year = c.getCyear() , month = c.getCmonth();
 //		this.setCid(c.getCid());
 		//找到对应的分数
+		if((this.cas != -1 || this.car != -1 )&& this.jsff == 0){
+			if(this.cas != -1 && this.car != -1){
+				this.ca = this.cas + this.car;
+			}else if(this.cas != -1 || this.car != -1){
+				this.ca = this.cas + this.car +1;
+			}
+		}else{
+			this.ca = -1;
+		}
+		
+		if(this.cas == -1 || this.car == -1){
+			this.ca = -1;
+		}
+		
 		if(year == 4 && month <= 2){
 			if(this.bd != -1){
 				this.bdl = A4_42.a1_bd[this.bd];
@@ -5306,9 +5329,7 @@ public class Age4{
 							}
 						}
 					}
-					
-				}
-				
+											
 				}else{
 					if(Math.abs(this.vci5zzsfscy) <= B2.fsiq_vci25){
 						this.vci5zzsjcl = ">25%";
@@ -5496,6 +5517,7 @@ public class Age4{
 						}
 					}
 				}
+			}
 		}
 		
 		if(this.vsi != -1 && this.fsiq != -1){
@@ -7093,8 +7115,12 @@ public class Age4{
 		//10个总分 mark3
 		//无缺
 		int count1 = com_all_1();
-		if(count1 < 1 ){
-			this.zszf10 = this.infl + this.sil + this.bdl + this.oal + this.mrl + this.pcl + this.pml + this.zll + this.bsl + this.cal;
+		if(count1 < 1 || (count1 <= 1 && this.fsiq != -1 && (this.inf == -1 || this.si == -1 || this.bd == -1 || this.mr == -1 || this.bs == -1 || this.pm == -1))){
+			if(this.inf == -1 || this.si == -1 || this.bd == -1 || this.mr == -1 || this.bs == -1 || this.pm == -1){
+				this.zszf10 = this.fsiq + this.oal + this.zll + this.pcl + this.zll ;
+			}else{
+				this.zszf10 = this.infl + this.sil + this.bdl + this.oal + this.mrl + this.pcl + this.pml + this.zll + this.bsl + this.cal;
+			}
 			this.zszf10jz = change2((float)this.zszf10 / 10);
 			this.zszf10fsd = com_fen();
 			
@@ -7852,767 +7878,775 @@ public class Age4{
 				}
 			}
 			
-			//分测_与fsiq比
-			this.zszf6 = this.fsiq;
-			this.zszf6jz = change2((float)this.zszf6 / 6);
-			this.zszf6fsd = this.zszf10fsd;
-			
-			this.zszf6infscy = change2((float)this.infl - this.zszf6jz);
-			this.zszf6sifscy = change2((float)this.sil - this.zszf6jz);
-			this.zszf6bdfscy = change2((float)this.bdl - this.zszf6jz);
-			this.zszf6oafscy = change2((float)this.oal - this.zszf6jz);
-			this.zszf6mrfscy = change2((float)this.mrl - this.zszf6jz);
-			this.zszf6pcfscy = change2((float)this.pcl - this.zszf6jz);
-			this.zszf6pmfscy = change2((float)this.pml - this.zszf6jz);
-			this.zszf6zlfscy = change2((float)this.zll - this.zszf6jz);
-			this.zszf6bsfscy = change2((float)this.bsl - this.zszf6jz);
-			this.zszf6cafscy = change2((float)this.cal - this.zszf6jz);
-			
-			if(this.ssp == 0){
-				this.zszf6inljz = B3.in_fsiq401;
-				this.zszf6siljz = B3.si_fsiq401;
-				this.zszf6bdljz = B3.bd_fsiq401;
-				this.zszf6oaljz = B3.oa_fsiq401;
-				this.zszf6mrljz = B3.mr_fsiq401;
-				this.zszf6pcljz = B3.pc_fsiq401;
-				this.zszf6pmljz = B3.pm_fsiq401;
-				this.zszf6zlljz = B3.zl_fsiq401;
-				this.zszf6bsljz = B3.bs_fsiq401;
-				this.zszf6caljz = B3.ca_fsiq401;
-			}
-			
-			if(this.ssp == 1){
-				this.zszf6inljz = B3.in_fsiq405;
-				this.zszf6siljz = B3.si_fsiq405;
-				this.zszf6bdljz = B3.bd_fsiq405;
-				this.zszf6oaljz = B3.oa_fsiq405;
-				this.zszf6mrljz = B3.mr_fsiq405;
-				this.zszf6pcljz = B3.pc_fsiq405;
-				this.zszf6pmljz = B3.pm_fsiq405;
-				this.zszf6zlljz = B3.zl_fsiq405;
-				this.zszf6bsljz = B3.bs_fsiq405;
-				this.zszf6caljz = B3.ca_fsiq405;
-			}
-			
-			if(this.ssp == 2){
-				this.zszf6inljz = B3.in_fsiq410;
-				this.zszf6siljz = B3.si_fsiq410;
-				this.zszf6bdljz = B3.bd_fsiq410;
-				this.zszf6oaljz = B3.oa_fsiq410;
-				this.zszf6mrljz = B3.mr_fsiq410;
-				this.zszf6pcljz = B3.pc_fsiq410;
-				this.zszf6pmljz = B3.pm_fsiq410;
-				this.zszf6zlljz = B3.zl_fsiq410;
-				this.zszf6bsljz = B3.bs_fsiq410;
-				this.zszf6caljz = B3.ca_fsiq410;
-			}
-			
-			if(this.ssp == 3){
-				this.zszf6inljz = B3.in_fsiq415;
-				this.zszf6siljz = B3.si_fsiq415;
-				this.zszf6bdljz = B3.bd_fsiq415;
-				this.zszf6oaljz = B3.oa_fsiq415;
-				this.zszf6mrljz = B3.mr_fsiq415;
-				this.zszf6pcljz = B3.pc_fsiq415;
-				this.zszf6pmljz = B3.pm_fsiq415;
-				this.zszf6zlljz = B3.zl_fsiq415;
-				this.zszf6bsljz = B3.bs_fsiq415;
-				this.zszf6caljz = B3.ca_fsiq415;
-			}
-			
-			//in强弱，基础
-			if(Math.abs(this.zszf6infscy) >= this.zszf6inljz){
-				if(this.zszf6infscy > 0){
-					this.zszf6inqrx = 1;
-				}else{
-					this.zszf6inqrx = 2;
+			if(this.fsiq != -1){
+				
+				//分测_与fsiq比
+				this.zszf6 = this.fsiq;
+				this.zszf6jz = change2((float)this.zszf6 / 6);
+				this.zszf6fsd = this.zszf10fsd;
+				
+				this.zszf6infscy = change2((float)this.infl - this.zszf6jz);
+				this.zszf6sifscy = change2((float)this.sil - this.zszf6jz);
+				this.zszf6bdfscy = change2((float)this.bdl - this.zszf6jz);
+				this.zszf6oafscy = change2((float)this.oal - this.zszf6jz);
+				this.zszf6mrfscy = change2((float)this.mrl - this.zszf6jz);
+				this.zszf6pcfscy = change2((float)this.pcl - this.zszf6jz);
+				this.zszf6pmfscy = change2((float)this.pml - this.zszf6jz);
+				this.zszf6zlfscy = change2((float)this.zll - this.zszf6jz);
+				this.zszf6bsfscy = change2((float)this.bsl - this.zszf6jz);
+				this.zszf6cafscy = change2((float)this.cal - this.zszf6jz);
+				
+				if(this.ssp == 0){
+					this.zszf6inljz = B3.in_fsiq401;
+					this.zszf6siljz = B3.si_fsiq401;
+					this.zszf6bdljz = B3.bd_fsiq401;
+					this.zszf6oaljz = B3.oa_fsiq401;
+					this.zszf6mrljz = B3.mr_fsiq401;
+					this.zszf6pcljz = B3.pc_fsiq401;
+					this.zszf6pmljz = B3.pm_fsiq401;
+					this.zszf6zlljz = B3.zl_fsiq401;
+					this.zszf6bsljz = B3.bs_fsiq401;
+					this.zszf6caljz = B3.ca_fsiq401;
 				}
 				
-				if(this.zszf6infscy < 0){
-					if(Math.abs(this.zszf6infscy) <= B4.in_fsiq25){
-						this.zszf6injcl = ">25%";
-						if(Math.abs(this.zszf6infscy) == B4.in_fsiq25){
-							this.zszf6injcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6infscy) > B4.in_fsiq25 && Math.abs(this.zszf6infscy) <= B4.in_fsiq10){
-						this.zszf6injcl = "10-25%";
-						if(Math.abs(this.zszf6infscy) == B4.in_fsiq10){
-							this.zszf6injcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6infscy) > B4.in_fsiq10 && Math.abs(this.zszf6infscy) <= B4.in_fsiq5){
-						this.zszf6injcl = "5-10%";
-						if(Math.abs(this.zszf6infscy) == B4.in_fsiq5){
-							this.zszf6injcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6infscy) > B4.in_fsiq5 && Math.abs(this.zszf6infscy) <= B4.in_fsiq2){
-						this.zszf6injcl = "2-5%";
-						if(Math.abs(this.zszf6infscy) == B4.in_fsiq2){
-							this.zszf6injcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6infscy) > B4.in_fsiq2 && Math.abs(this.zszf6infscy) <= B4.in_fsiq1){
-						this.zszf6injcl = "1-2%";
-						if(Math.abs(this.zszf6infscy) == B4.in_fsiq1){
-							this.zszf6injcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6infscy) >= B4.in_fsiq1 ){
-						this.zszf6injcl = "<1%";
-					}
-				}else{
-					if(Math.abs(this.zszf6infscy) <= B4.fsiq_in25){
-						this.zszf6injcl = ">25%";
-						if(Math.abs(this.zszf6infscy) == B4.fsiq_in25){
-							this.zszf6injcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6infscy) > B4.fsiq_in25 && Math.abs(this.zszf6infscy) <= B4.fsiq_in10){
-						this.zszf6injcl = "10-25%";
-						if(Math.abs(this.zszf6infscy) == B4.fsiq_in10){
-							this.zszf6injcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6infscy) > B4.fsiq_in10 && Math.abs(this.zszf6infscy) <= B4.fsiq_in5){
-						this.zszf6injcl = "5-10%";
-						if(Math.abs(this.zszf6infscy) == B4.fsiq_in5){
-							this.zszf6injcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6infscy) > B4.fsiq_in5 && Math.abs(this.zszf6infscy) <= B4.fsiq_in2){
-						this.zszf6injcl = "2-5%";
-						if(Math.abs(this.zszf6infscy) == B4.fsiq_in2){
-							this.zszf6injcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6infscy) > B4.fsiq_in2 && Math.abs(this.zszf6infscy) <= B4.fsiq_in1){
-						this.zszf6injcl = "1-2%";
-						if(Math.abs(this.zszf6infscy) == B4.fsiq_in1){
-							this.zszf6injcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6infscy) >= B4.fsiq_in1 ){
-						this.zszf6injcl = "<1%";
-					}
-				}
-			}
-			
-			//si强弱，基础
-			if(Math.abs(this.zszf6sifscy) >= this.zszf6siljz){
-				if(this.zszf6sifscy > 0){
-					this.zszf6siqrx = 1;
-				}else{
-					this.zszf6siqrx = 2;
+				if(this.ssp == 1){
+					this.zszf6inljz = B3.in_fsiq405;
+					this.zszf6siljz = B3.si_fsiq405;
+					this.zszf6bdljz = B3.bd_fsiq405;
+					this.zszf6oaljz = B3.oa_fsiq405;
+					this.zszf6mrljz = B3.mr_fsiq405;
+					this.zszf6pcljz = B3.pc_fsiq405;
+					this.zszf6pmljz = B3.pm_fsiq405;
+					this.zszf6zlljz = B3.zl_fsiq405;
+					this.zszf6bsljz = B3.bs_fsiq405;
+					this.zszf6caljz = B3.ca_fsiq405;
 				}
 				
-				if(this.zszf6sifscy < 0){
-					if(Math.abs(this.zszf6sifscy) <= B4.si_fsiq25){
-						this.zszf6sijcl = ">25%";
-						if(Math.abs(this.zszf6sifscy) == B4.si_fsiq25){
-							this.zszf6sijcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) > B4.si_fsiq25 && Math.abs(this.zszf6sifscy) <= B4.si_fsiq10){
-						this.zszf6sijcl = "10-25%";
-						if(Math.abs(this.zszf6sifscy) == B4.si_fsiq10){
-							this.zszf6sijcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) > B4.si_fsiq10 && Math.abs(this.zszf6sifscy) <= B4.si_fsiq5){
-						this.zszf6sijcl = "5-10%";
-						if(Math.abs(this.zszf6sifscy) == B4.si_fsiq5){
-							this.zszf6sijcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) > B4.si_fsiq5 && Math.abs(this.zszf6sifscy) <= B4.si_fsiq2){
-						this.zszf6sijcl = "2-5%";
-						if(Math.abs(this.zszf6sifscy) == B4.si_fsiq2){
-							this.zszf6sijcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) > B4.si_fsiq2 && Math.abs(this.zszf6sifscy) <= B4.si_fsiq1){
-						this.zszf6sijcl = "1-2%";
-						if(Math.abs(this.zszf6sifscy) == B4.si_fsiq1){
-							this.zszf6sijcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) >= B4.si_fsiq1 ){
-						this.zszf6sijcl = "<1%";
-					}
-				}else{
-					if(Math.abs(this.zszf6sifscy) <= B4.fsiq_si25){
-						this.zszf6sijcl = ">25%";
-						if(Math.abs(this.zszf6sifscy) == B4.fsiq_si25){
-							this.zszf6sijcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) > B4.fsiq_si25 && Math.abs(this.zszf6sifscy) <= B4.fsiq_si10){
-						this.zszf6sijcl = "10-25%";
-						if(Math.abs(this.zszf6sifscy) == B4.fsiq_si10){
-							this.zszf6sijcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) > B4.fsiq_si10 && Math.abs(this.zszf6sifscy) <= B4.fsiq_si5){
-						this.zszf6sijcl = "5-10%";
-						if(Math.abs(this.zszf6sifscy) == B4.fsiq_si5){
-							this.zszf6sijcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) > B4.fsiq_si5 && Math.abs(this.zszf6sifscy) <= B4.fsiq_si2){
-						this.zszf6sijcl = "2-5%";
-						if(Math.abs(this.zszf6sifscy) == B4.fsiq_si2){
-							this.zszf6sijcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) > B4.fsiq_si2 && Math.abs(this.zszf6sifscy) <= B4.fsiq_si1){
-						this.zszf6sijcl = "1-2%";
-						if(Math.abs(this.zszf6sifscy) == B4.fsiq_si1){
-							this.zszf6sijcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6sifscy) >= B4.fsiq_si1 ){
-						this.zszf6sijcl = "<1%";
-					}
-				}
-			}
-			
-			//bd强弱，基础
-			if(Math.abs(this.zszf6bdfscy) >= this.zszf6bdljz){
-				if(this.zszf6bdfscy > 0){
-					this.zszf6bdqrx = 1;
-				}else{
-					this.zszf6bdqrx = 2;
+				if(this.ssp == 2){
+					this.zszf6inljz = B3.in_fsiq410;
+					this.zszf6siljz = B3.si_fsiq410;
+					this.zszf6bdljz = B3.bd_fsiq410;
+					this.zszf6oaljz = B3.oa_fsiq410;
+					this.zszf6mrljz = B3.mr_fsiq410;
+					this.zszf6pcljz = B3.pc_fsiq410;
+					this.zszf6pmljz = B3.pm_fsiq410;
+					this.zszf6zlljz = B3.zl_fsiq410;
+					this.zszf6bsljz = B3.bs_fsiq410;
+					this.zszf6caljz = B3.ca_fsiq410;
 				}
 				
-				if(this.zszf6bdfscy < 0){
-					if(Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq25){
-						this.zszf6bdjcl = ">25%";
-						if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq25){
-							this.zszf6bdjcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) > B4.bd_fsiq25 && Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq10){
-						this.zszf6bdjcl = "10-25%";
-						if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq10){
-							this.zszf6bdjcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) > B4.bd_fsiq10 && Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq5){
-						this.zszf6bdjcl = "5-10%";
-						if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq5){
-							this.zszf6bdjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) > B4.bd_fsiq5 && Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq2){
-						this.zszf6bdjcl = "2-5%";
-						if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq2){
-							this.zszf6bdjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) > B4.bd_fsiq2 && Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq1){
-						this.zszf6bdjcl = "1-2%";
-						if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq1){
-							this.zszf6bdjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) >= B4.bd_fsiq1 ){
-						this.zszf6bdjcl = "<1%";
-					}
-				}else{
-					if(Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd25){
-						this.zszf6bdjcl = ">25%";
-						if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd25){
-							this.zszf6bdjcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) > B4.fsiq_bd25 && Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd10){
-						this.zszf6bdjcl = "10-25%";
-						if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd10){
-							this.zszf6bdjcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) > B4.fsiq_bd10 && Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd5){
-						this.zszf6bdjcl = "5-10%";
-						if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd5){
-							this.zszf6bdjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) > B4.fsiq_bd5 && Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd2){
-						this.zszf6bdjcl = "2-5%";
-						if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd2){
-							this.zszf6bdjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) > B4.fsiq_bd2 && Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd1){
-						this.zszf6bdjcl = "1-2%";
-						if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd1){
-							this.zszf6bdjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6bdfscy) >= B4.fsiq_bd1 ){
-						this.zszf6bdjcl = "<1%";
-					}
-				}
-			}
-			
-			//oa强弱，基础
-			if(Math.abs(this.zszf6oafscy) >= this.zszf6oaljz){
-				if(this.zszf6oafscy > 0){
-					this.zszf6oaqrx = 1;
-				}else{
-					this.zszf6oaqrx = 2;
+				if(this.ssp == 3){
+					this.zszf6inljz = B3.in_fsiq415;
+					this.zszf6siljz = B3.si_fsiq415;
+					this.zszf6bdljz = B3.bd_fsiq415;
+					this.zszf6oaljz = B3.oa_fsiq415;
+					this.zszf6mrljz = B3.mr_fsiq415;
+					this.zszf6pcljz = B3.pc_fsiq415;
+					this.zszf6pmljz = B3.pm_fsiq415;
+					this.zszf6zlljz = B3.zl_fsiq415;
+					this.zszf6bsljz = B3.bs_fsiq415;
+					this.zszf6caljz = B3.ca_fsiq415;
 				}
 				
-				if(this.zszf6oafscy < 0){
-					if(Math.abs(this.zszf6oafscy) <= B4.oa_fsiq25){
-						this.zszf6oajcl = ">25%";
-						if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq25){
-							this.zszf6oajcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6oafscy) > B4.oa_fsiq25 && Math.abs(this.zszf6oafscy) <= B4.oa_fsiq10){
-						this.zszf6oajcl = "10-25%";
-						if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq10){
-							this.zszf6oajcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6oafscy) > B4.oa_fsiq10 && Math.abs(this.zszf6oafscy) <= B4.oa_fsiq5){
-						this.zszf6oajcl = "5-10%";
-						if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq5){
-							this.zszf6oajcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6oafscy) > B4.oa_fsiq5 && Math.abs(this.zszf6oafscy) <= B4.oa_fsiq2){
-						this.zszf6oajcl = "2-5%";
-						if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq2){
-							this.zszf6oajcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6oafscy) > B4.oa_fsiq2 && Math.abs(this.zszf6oafscy) <= B4.oa_fsiq1){
-						this.zszf6oajcl = "1-2%";
-						if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq1){
-							this.zszf6oajcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6oafscy) >= B4.oa_fsiq1 ){
-						this.zszf6oajcl = "<1%";
+				//in强弱，基础
+				if(Math.abs(this.zszf6infscy) >= this.zszf6inljz){
+					if(this.zszf6infscy > 0){
+						this.zszf6inqrx = 1;
+					}else{
+						this.zszf6inqrx = 2;
 					}
-				}else{
-					if(Math.abs(this.zszf6oafscy) <= B4.fsiq_oa25){
-						this.zszf6oajcl = ">25%";
-						if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa25){
-							this.zszf6oajcl ="25%";
+					
+					if(this.zszf6infscy < 0){
+						if(Math.abs(this.zszf6infscy) <= B4.in_fsiq25){
+							this.zszf6injcl = ">25%";
+							if(Math.abs(this.zszf6infscy) == B4.in_fsiq25){
+								this.zszf6injcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6infscy) > B4.in_fsiq25 && Math.abs(this.zszf6infscy) <= B4.in_fsiq10){
+							this.zszf6injcl = "10-25%";
+							if(Math.abs(this.zszf6infscy) == B4.in_fsiq10){
+								this.zszf6injcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6infscy) > B4.in_fsiq10 && Math.abs(this.zszf6infscy) <= B4.in_fsiq5){
+							this.zszf6injcl = "5-10%";
+							if(Math.abs(this.zszf6infscy) == B4.in_fsiq5){
+								this.zszf6injcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6infscy) > B4.in_fsiq5 && Math.abs(this.zszf6infscy) <= B4.in_fsiq2){
+							this.zszf6injcl = "2-5%";
+							if(Math.abs(this.zszf6infscy) == B4.in_fsiq2){
+								this.zszf6injcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6infscy) > B4.in_fsiq2 && Math.abs(this.zszf6infscy) <= B4.in_fsiq1){
+							this.zszf6injcl = "1-2%";
+							if(Math.abs(this.zszf6infscy) == B4.in_fsiq1){
+								this.zszf6injcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6infscy) >= B4.in_fsiq1 ){
+							this.zszf6injcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6oafscy) > B4.fsiq_oa25 && Math.abs(this.zszf6oafscy) <= B4.fsiq_oa10){
-						this.zszf6oajcl = "10-25%";
-						if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa10){
-							this.zszf6oajcl ="10%";
+					}else{
+						if(Math.abs(this.zszf6infscy) <= B4.fsiq_in25){
+							this.zszf6injcl = ">25%";
+							if(Math.abs(this.zszf6infscy) == B4.fsiq_in25){
+								this.zszf6injcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6infscy) > B4.fsiq_in25 && Math.abs(this.zszf6infscy) <= B4.fsiq_in10){
+							this.zszf6injcl = "10-25%";
+							if(Math.abs(this.zszf6infscy) == B4.fsiq_in10){
+								this.zszf6injcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6infscy) > B4.fsiq_in10 && Math.abs(this.zszf6infscy) <= B4.fsiq_in5){
+							this.zszf6injcl = "5-10%";
+							if(Math.abs(this.zszf6infscy) == B4.fsiq_in5){
+								this.zszf6injcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6infscy) > B4.fsiq_in5 && Math.abs(this.zszf6infscy) <= B4.fsiq_in2){
+							this.zszf6injcl = "2-5%";
+							if(Math.abs(this.zszf6infscy) == B4.fsiq_in2){
+								this.zszf6injcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6infscy) > B4.fsiq_in2 && Math.abs(this.zszf6infscy) <= B4.fsiq_in1){
+							this.zszf6injcl = "1-2%";
+							if(Math.abs(this.zszf6infscy) == B4.fsiq_in1){
+								this.zszf6injcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6infscy) >= B4.fsiq_in1 ){
+							this.zszf6injcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6oafscy) > B4.fsiq_oa10 && Math.abs(this.zszf6oafscy) <= B4.fsiq_oa5){
-						this.zszf6oajcl = "5-10%";
-						if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa5){
-							this.zszf6oajcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6oafscy) > B4.fsiq_oa5 && Math.abs(this.zszf6oafscy) <= B4.fsiq_oa2){
-						this.zszf6oajcl = "2-5%";
-						if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa2){
-							this.zszf6oajcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6oafscy) > B4.fsiq_oa2 && Math.abs(this.zszf6oafscy) <= B4.fsiq_oa1){
-						this.zszf6oajcl = "1-2%";
-						if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa1){
-							this.zszf6oajcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6oafscy) >= B4.fsiq_oa1 ){
-						this.zszf6oajcl = "<1%";
 					}
-				}
-			}
-			
-			//mr强弱，基础
-			if(Math.abs(this.zszf6mrfscy) >= this.zszf6mrljz){
-				if(this.zszf6mrfscy > 0){
-					this.zszf6mrqrx = 1;
-				}else{
-					this.zszf6mrqrx = 2;
 				}
 				
-				if(this.zszf6mrfscy < 0){
-					if(Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq25){
-						this.zszf6mrjcl = ">25%";
-						if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq25){
-							this.zszf6mrjcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6mrfscy) > B4.mr_fsiq25 && Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq10){
-						this.zszf6mrjcl = "10-25%";
-						if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq10){
-							this.zszf6mrjcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6mrfscy) > B4.mr_fsiq10 && Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq5){
-						this.zszf6mrjcl = "5-10%";
-						if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq5){
-							this.zszf6mrjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6mrfscy) > B4.mr_fsiq5 && Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq2){
-						this.zszf6mrjcl = "2-5%";
-						if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq2){
-							this.zszf6mrjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6mrfscy) > B4.mr_fsiq2 && Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq1){
-						this.zszf6mrjcl = "1-2%";
-						if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq1){
-							this.zszf6mrjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6mrfscy) >= B4.mr_fsiq1 ){
-						this.zszf6mrjcl = "<1%";
+				//si强弱，基础
+				if(Math.abs(this.zszf6sifscy) >= this.zszf6siljz){
+					if(this.zszf6sifscy > 0){
+						this.zszf6siqrx = 1;
+					}else{
+						this.zszf6siqrx = 2;
 					}
-				}else{
-					if(Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr25){
-						this.zszf6mrjcl = ">25%";
-						if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr25){
-							this.zszf6mrjcl ="25%";
+					
+					if(this.zszf6sifscy < 0){
+						if(Math.abs(this.zszf6sifscy) <= B4.si_fsiq25){
+							this.zszf6sijcl = ">25%";
+							if(Math.abs(this.zszf6sifscy) == B4.si_fsiq25){
+								this.zszf6sijcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) > B4.si_fsiq25 && Math.abs(this.zszf6sifscy) <= B4.si_fsiq10){
+							this.zszf6sijcl = "10-25%";
+							if(Math.abs(this.zszf6sifscy) == B4.si_fsiq10){
+								this.zszf6sijcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) > B4.si_fsiq10 && Math.abs(this.zszf6sifscy) <= B4.si_fsiq5){
+							this.zszf6sijcl = "5-10%";
+							if(Math.abs(this.zszf6sifscy) == B4.si_fsiq5){
+								this.zszf6sijcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) > B4.si_fsiq5 && Math.abs(this.zszf6sifscy) <= B4.si_fsiq2){
+							this.zszf6sijcl = "2-5%";
+							if(Math.abs(this.zszf6sifscy) == B4.si_fsiq2){
+								this.zszf6sijcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) > B4.si_fsiq2 && Math.abs(this.zszf6sifscy) <= B4.si_fsiq1){
+							this.zszf6sijcl = "1-2%";
+							if(Math.abs(this.zszf6sifscy) == B4.si_fsiq1){
+								this.zszf6sijcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) >= B4.si_fsiq1 ){
+							this.zszf6sijcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6mrfscy) > B4.fsiq_mr25 && Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr10){
-						this.zszf6mrjcl = "10-25%";
-						if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr10){
-							this.zszf6mrjcl ="10%";
+					}else{
+						if(Math.abs(this.zszf6sifscy) <= B4.fsiq_si25){
+							this.zszf6sijcl = ">25%";
+							if(Math.abs(this.zszf6sifscy) == B4.fsiq_si25){
+								this.zszf6sijcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) > B4.fsiq_si25 && Math.abs(this.zszf6sifscy) <= B4.fsiq_si10){
+							this.zszf6sijcl = "10-25%";
+							if(Math.abs(this.zszf6sifscy) == B4.fsiq_si10){
+								this.zszf6sijcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) > B4.fsiq_si10 && Math.abs(this.zszf6sifscy) <= B4.fsiq_si5){
+							this.zszf6sijcl = "5-10%";
+							if(Math.abs(this.zszf6sifscy) == B4.fsiq_si5){
+								this.zszf6sijcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) > B4.fsiq_si5 && Math.abs(this.zszf6sifscy) <= B4.fsiq_si2){
+							this.zszf6sijcl = "2-5%";
+							if(Math.abs(this.zszf6sifscy) == B4.fsiq_si2){
+								this.zszf6sijcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) > B4.fsiq_si2 && Math.abs(this.zszf6sifscy) <= B4.fsiq_si1){
+							this.zszf6sijcl = "1-2%";
+							if(Math.abs(this.zszf6sifscy) == B4.fsiq_si1){
+								this.zszf6sijcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6sifscy) >= B4.fsiq_si1 ){
+							this.zszf6sijcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6mrfscy) > B4.fsiq_mr10 && Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr5){
-						this.zszf6mrjcl = "5-10%";
-						if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr5){
-							this.zszf6mrjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6mrfscy) > B4.fsiq_mr5 && Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr2){
-						this.zszf6mrjcl = "2-5%";
-						if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr2){
-							this.zszf6mrjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6mrfscy) > B4.fsiq_mr2 && Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr1){
-						this.zszf6mrjcl = "1-2%";
-						if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr1){
-							this.zszf6mrjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6mrfscy) >= B4.fsiq_mr1 ){
-						this.zszf6mrjcl = "<1%";
 					}
-				}
-			}
-			
-			//pc强弱，基础
-			if(Math.abs(this.zszf6pcfscy) >= this.zszf6pcljz){
-				if(this.zszf6pcfscy > 0){
-					this.zszf6pcqrx = 1;
-				}else{
-					this.zszf6pcqrx = 2;
 				}
 				
-				if(this.zszf6pcfscy < 0){
-					if(Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq25){
-						this.zszf6pcjcl = ">25%";
-						if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq25){
-							this.zszf6pcjcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6pcfscy) > B4.pc_fsiq25 && Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq10){
-						this.zszf6pcjcl = "10-25%";
-						if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq10){
-							this.zszf6pcjcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6pcfscy) > B4.pc_fsiq10 && Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq5){
-						this.zszf6pcjcl = "5-10%";
-						if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq5){
-							this.zszf6pcjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6pcfscy) > B4.pc_fsiq5 && Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq2){
-						this.zszf6pcjcl = "2-5%";
-						if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq2){
-							this.zszf6pcjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6pcfscy) > B4.pc_fsiq2 && Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq1){
-						this.zszf6pcjcl = "1-2%";
-						if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq1){
-							this.zszf6pcjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6pcfscy) >= B4.pc_fsiq1 ){
-						this.zszf6pcjcl = "<1%";
+				//bd强弱，基础
+				if(Math.abs(this.zszf6bdfscy) >= this.zszf6bdljz){
+					if(this.zszf6bdfscy > 0){
+						this.zszf6bdqrx = 1;
+					}else{
+						this.zszf6bdqrx = 2;
 					}
-				}else{
-					if(Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc25){
-						this.zszf6pcjcl = ">25%";
-						if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc25){
-							this.zszf6pcjcl ="25%";
+					
+					if(this.zszf6bdfscy < 0){
+						if(Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq25){
+							this.zszf6bdjcl = ">25%";
+							if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq25){
+								this.zszf6bdjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) > B4.bd_fsiq25 && Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq10){
+							this.zszf6bdjcl = "10-25%";
+							if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq10){
+								this.zszf6bdjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) > B4.bd_fsiq10 && Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq5){
+							this.zszf6bdjcl = "5-10%";
+							if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq5){
+								this.zszf6bdjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) > B4.bd_fsiq5 && Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq2){
+							this.zszf6bdjcl = "2-5%";
+							if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq2){
+								this.zszf6bdjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) > B4.bd_fsiq2 && Math.abs(this.zszf6bdfscy) <= B4.bd_fsiq1){
+							this.zszf6bdjcl = "1-2%";
+							if(Math.abs(this.zszf6bdfscy) == B4.bd_fsiq1){
+								this.zszf6bdjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) >= B4.bd_fsiq1 ){
+							this.zszf6bdjcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6pcfscy) > B4.fsiq_pc25 && Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc10){
-						this.zszf6pcjcl = "10-25%";
-						if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc10){
-							this.zszf6pcjcl ="10%";
+					}else{
+						if(Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd25){
+							this.zszf6bdjcl = ">25%";
+							if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd25){
+								this.zszf6bdjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) > B4.fsiq_bd25 && Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd10){
+							this.zszf6bdjcl = "10-25%";
+							if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd10){
+								this.zszf6bdjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) > B4.fsiq_bd10 && Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd5){
+							this.zszf6bdjcl = "5-10%";
+							if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd5){
+								this.zszf6bdjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) > B4.fsiq_bd5 && Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd2){
+							this.zszf6bdjcl = "2-5%";
+							if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd2){
+								this.zszf6bdjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) > B4.fsiq_bd2 && Math.abs(this.zszf6bdfscy) <= B4.fsiq_bd1){
+							this.zszf6bdjcl = "1-2%";
+							if(Math.abs(this.zszf6bdfscy) == B4.fsiq_bd1){
+								this.zszf6bdjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6bdfscy) >= B4.fsiq_bd1 ){
+							this.zszf6bdjcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6pcfscy) > B4.fsiq_pc10 && Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc5){
-						this.zszf6pcjcl = "5-10%";
-						if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc5){
-							this.zszf6pcjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6pcfscy) > B4.fsiq_pc5 && Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc2){
-						this.zszf6pcjcl = "2-5%";
-						if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc2){
-							this.zszf6pcjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6pcfscy) > B4.fsiq_pc2 && Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc1){
-						this.zszf6pcjcl = "1-2%";
-						if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc1){
-							this.zszf6pcjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6pcfscy) >= B4.fsiq_pc1 ){
-						this.zszf6pcjcl = "<1%";
 					}
-				}
-			}
-			
-			//pm强弱，基础
-			if(Math.abs(this.zszf6pmfscy) >= this.zszf6pmljz){
-				if(this.zszf6pmfscy > 0){
-					this.zszf6pmqrx = 1;
-				}else{
-					this.zszf6pmqrx = 2;
 				}
 				
-				if(this.zszf6pmfscy < 0){
-					if(Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq25){
-						this.zszf6pmjcl = ">25%";
-						if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq25){
-							this.zszf6pmjcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6pmfscy) > B4.pm_fsiq25 && Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq10){
-						this.zszf6pmjcl = "10-25%";
-						if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq10){
-							this.zszf6pmjcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6pmfscy) > B4.pm_fsiq10 && Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq5){
-						this.zszf6pmjcl = "5-10%";
-						if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq5){
-							this.zszf6pmjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6pmfscy) > B4.pm_fsiq5 && Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq2){
-						this.zszf6pmjcl = "2-5%";
-						if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq2){
-							this.zszf6pmjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6pmfscy) > B4.pm_fsiq2 && Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq1){
-						this.zszf6pmjcl = "1-2%";
-						if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq1){
-							this.zszf6pmjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6pmfscy) >= B4.pm_fsiq1 ){
-						this.zszf6pmjcl = "<1%";
+				//oa强弱，基础
+				if(Math.abs(this.zszf6oafscy) >= this.zszf6oaljz){
+					if(this.zszf6oafscy > 0){
+						this.zszf6oaqrx = 1;
+					}else{
+						this.zszf6oaqrx = 2;
 					}
-				}else{
-					if(Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm25){
-						this.zszf6pmjcl = ">25%";
-						if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm25){
-							this.zszf6pmjcl ="25%";
+					
+					if(this.zszf6oafscy < 0){
+						if(Math.abs(this.zszf6oafscy) <= B4.oa_fsiq25){
+							this.zszf6oajcl = ">25%";
+							if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq25){
+								this.zszf6oajcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) > B4.oa_fsiq25 && Math.abs(this.zszf6oafscy) <= B4.oa_fsiq10){
+							this.zszf6oajcl = "10-25%";
+							if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq10){
+								this.zszf6oajcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) > B4.oa_fsiq10 && Math.abs(this.zszf6oafscy) <= B4.oa_fsiq5){
+							this.zszf6oajcl = "5-10%";
+							if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq5){
+								this.zszf6oajcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) > B4.oa_fsiq5 && Math.abs(this.zszf6oafscy) <= B4.oa_fsiq2){
+							this.zszf6oajcl = "2-5%";
+							if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq2){
+								this.zszf6oajcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) > B4.oa_fsiq2 && Math.abs(this.zszf6oafscy) <= B4.oa_fsiq1){
+							this.zszf6oajcl = "1-2%";
+							if(Math.abs(this.zszf6oafscy) == B4.oa_fsiq1){
+								this.zszf6oajcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) >= B4.oa_fsiq1 ){
+							this.zszf6oajcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6pmfscy) > B4.fsiq_pm25 && Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm10){
-						this.zszf6pmjcl = "10-25%";
-						if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm10){
-							this.zszf6pmjcl ="10%";
+					}else{
+						if(Math.abs(this.zszf6oafscy) <= B4.fsiq_oa25){
+							this.zszf6oajcl = ">25%";
+							if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa25){
+								this.zszf6oajcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) > B4.fsiq_oa25 && Math.abs(this.zszf6oafscy) <= B4.fsiq_oa10){
+							this.zszf6oajcl = "10-25%";
+							if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa10){
+								this.zszf6oajcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) > B4.fsiq_oa10 && Math.abs(this.zszf6oafscy) <= B4.fsiq_oa5){
+							this.zszf6oajcl = "5-10%";
+							if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa5){
+								this.zszf6oajcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) > B4.fsiq_oa5 && Math.abs(this.zszf6oafscy) <= B4.fsiq_oa2){
+							this.zszf6oajcl = "2-5%";
+							if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa2){
+								this.zszf6oajcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) > B4.fsiq_oa2 && Math.abs(this.zszf6oafscy) <= B4.fsiq_oa1){
+							this.zszf6oajcl = "1-2%";
+							if(Math.abs(this.zszf6oafscy) == B4.fsiq_oa1){
+								this.zszf6oajcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6oafscy) >= B4.fsiq_oa1 ){
+							this.zszf6oajcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6pmfscy) > B4.fsiq_pm10 && Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm5){
-						this.zszf6pmjcl = "5-10%";
-						if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm5){
-							this.zszf6pmjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6pmfscy) > B4.fsiq_pm5 && Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm2){
-						this.zszf6pmjcl = "2-5%";
-						if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm2){
-							this.zszf6pmjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6pmfscy) > B4.fsiq_pm2 && Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm1){
-						this.zszf6pmjcl = "1-2%";
-						if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm1){
-							this.zszf6pmjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6pmfscy) >= B4.fsiq_pm1 ){
-						this.zszf6pmjcl = "<1%";
 					}
-				}
-			}
-			
-			//zl强弱，基础
-			if(Math.abs(this.zszf6zlfscy) >= this.zszf6zlljz){
-				if(this.zszf6zlfscy > 0){
-					this.zszf6zlqrx = 1;
-				}else{
-					this.zszf6zlqrx = 2;
 				}
 				
-				if(this.zszf6zlfscy < 0){
-					if(Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq25){
-						this.zszf6zljcl = ">25%";
-						if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq25){
-							this.zszf6zljcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6zlfscy) > B4.zl_fsiq25 && Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq10){
-						this.zszf6zljcl = "10-25%";
-						if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq10){
-							this.zszf6zljcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6zlfscy) > B4.zl_fsiq10 && Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq5){
-						this.zszf6zljcl = "5-10%";
-						if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq5){
-							this.zszf6zljcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6zlfscy) > B4.zl_fsiq5 && Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq2){
-						this.zszf6zljcl = "2-5%";
-						if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq2){
-							this.zszf6zljcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6zlfscy) > B4.zl_fsiq2 && Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq1){
-						this.zszf6zljcl = "1-2%";
-						if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq1){
-							this.zszf6zljcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6zlfscy) >= B4.zl_fsiq1 ){
-						this.zszf6zljcl = "<1%";
+				//mr强弱，基础
+				if(Math.abs(this.zszf6mrfscy) >= this.zszf6mrljz){
+					if(this.zszf6mrfscy > 0){
+						this.zszf6mrqrx = 1;
+					}else{
+						this.zszf6mrqrx = 2;
 					}
-				}else{
-					if(Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl25){
-						this.zszf6zljcl = ">25%";
-						if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl25){
-							this.zszf6zljcl ="25%";
+					
+					if(this.zszf6mrfscy < 0){
+						if(Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq25){
+							this.zszf6mrjcl = ">25%";
+							if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq25){
+								this.zszf6mrjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) > B4.mr_fsiq25 && Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq10){
+							this.zszf6mrjcl = "10-25%";
+							if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq10){
+								this.zszf6mrjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) > B4.mr_fsiq10 && Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq5){
+							this.zszf6mrjcl = "5-10%";
+							if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq5){
+								this.zszf6mrjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) > B4.mr_fsiq5 && Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq2){
+							this.zszf6mrjcl = "2-5%";
+							if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq2){
+								this.zszf6mrjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) > B4.mr_fsiq2 && Math.abs(this.zszf6mrfscy) <= B4.mr_fsiq1){
+							this.zszf6mrjcl = "1-2%";
+							if(Math.abs(this.zszf6mrfscy) == B4.mr_fsiq1){
+								this.zszf6mrjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) >= B4.mr_fsiq1 ){
+							this.zszf6mrjcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6zlfscy) > B4.fsiq_zl25 && Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl10){
-						this.zszf6zljcl = "10-25%";
-						if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl10){
-							this.zszf6zljcl ="10%";
+					}else{
+						if(Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr25){
+							this.zszf6mrjcl = ">25%";
+							if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr25){
+								this.zszf6mrjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) > B4.fsiq_mr25 && Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr10){
+							this.zszf6mrjcl = "10-25%";
+							if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr10){
+								this.zszf6mrjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) > B4.fsiq_mr10 && Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr5){
+							this.zszf6mrjcl = "5-10%";
+							if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr5){
+								this.zszf6mrjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) > B4.fsiq_mr5 && Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr2){
+							this.zszf6mrjcl = "2-5%";
+							if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr2){
+								this.zszf6mrjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) > B4.fsiq_mr2 && Math.abs(this.zszf6mrfscy) <= B4.fsiq_mr1){
+							this.zszf6mrjcl = "1-2%";
+							if(Math.abs(this.zszf6mrfscy) == B4.fsiq_mr1){
+								this.zszf6mrjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6mrfscy) >= B4.fsiq_mr1 ){
+							this.zszf6mrjcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6zlfscy) > B4.fsiq_zl10 && Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl5){
-						this.zszf6zljcl = "5-10%";
-						if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl5){
-							this.zszf6zljcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6zlfscy) > B4.fsiq_zl5 && Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl2){
-						this.zszf6zljcl = "2-5%";
-						if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl2){
-							this.zszf6zljcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6zlfscy) > B4.fsiq_zl2 && Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl1){
-						this.zszf6zljcl = "1-2%";
-						if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl1){
-							this.zszf6zljcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6zlfscy) >= B4.fsiq_zl1 ){
-						this.zszf6zljcl = "<1%";
 					}
-				}
-			}
-			
-			//bs强弱，基础
-			if(Math.abs(this.zszf6bsfscy) >= this.zszf6bsljz){
-				if(this.zszf6bsfscy > 0){
-					this.zszf6bsqrx = 1;
-				}else{
-					this.zszf6bsqrx = 2;
 				}
 				
-				if(this.zszf6bsfscy < 0){
-					if(Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq25){
-						this.zszf6bsjcl = ">25%";
-						if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq25){
-							this.zszf6bsjcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6bsfscy) > B4.bs_fsiq25 && Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq10){
-						this.zszf6bsjcl = "10-25%";
-						if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq10){
-							this.zszf6bsjcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6bsfscy) > B4.bs_fsiq10 && Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq5){
-						this.zszf6bsjcl = "5-10%";
-						if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq5){
-							this.zszf6bsjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6bsfscy) > B4.bs_fsiq5 && Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq2){
-						this.zszf6bsjcl = "2-5%";
-						if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq2){
-							this.zszf6bsjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6bsfscy) > B4.bs_fsiq2 && Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq1){
-						this.zszf6bsjcl = "1-2%";
-						if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq1){
-							this.zszf6bsjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6bsfscy) >= B4.bs_fsiq1 ){
-						this.zszf6bsjcl = "<1%";
+				//pc强弱，基础
+				if(Math.abs(this.zszf6pcfscy) >= this.zszf6pcljz){
+					if(this.zszf6pcfscy > 0){
+						this.zszf6pcqrx = 1;
+					}else{
+						this.zszf6pcqrx = 2;
 					}
-				}else{
-					if(Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs25){
-						this.zszf6bsjcl = ">25%";
-						if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs25){
-							this.zszf6bsjcl ="25%";
+					
+					if(this.zszf6pcfscy < 0){
+						if(Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq25){
+							this.zszf6pcjcl = ">25%";
+							if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq25){
+								this.zszf6pcjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) > B4.pc_fsiq25 && Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq10){
+							this.zszf6pcjcl = "10-25%";
+							if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq10){
+								this.zszf6pcjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) > B4.pc_fsiq10 && Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq5){
+							this.zszf6pcjcl = "5-10%";
+							if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq5){
+								this.zszf6pcjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) > B4.pc_fsiq5 && Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq2){
+							this.zszf6pcjcl = "2-5%";
+							if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq2){
+								this.zszf6pcjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) > B4.pc_fsiq2 && Math.abs(this.zszf6pcfscy) <= B4.pc_fsiq1){
+							this.zszf6pcjcl = "1-2%";
+							if(Math.abs(this.zszf6pcfscy) == B4.pc_fsiq1){
+								this.zszf6pcjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) >= B4.pc_fsiq1 ){
+							this.zszf6pcjcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6bsfscy) > B4.fsiq_bs25 && Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs10){
-						this.zszf6bsjcl = "10-25%";
-						if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs10){
-							this.zszf6bsjcl ="10%";
+					}else{
+						if(Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc25){
+							this.zszf6pcjcl = ">25%";
+							if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc25){
+								this.zszf6pcjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) > B4.fsiq_pc25 && Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc10){
+							this.zszf6pcjcl = "10-25%";
+							if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc10){
+								this.zszf6pcjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) > B4.fsiq_pc10 && Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc5){
+							this.zszf6pcjcl = "5-10%";
+							if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc5){
+								this.zszf6pcjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) > B4.fsiq_pc5 && Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc2){
+							this.zszf6pcjcl = "2-5%";
+							if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc2){
+								this.zszf6pcjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) > B4.fsiq_pc2 && Math.abs(this.zszf6pcfscy) <= B4.fsiq_pc1){
+							this.zszf6pcjcl = "1-2%";
+							if(Math.abs(this.zszf6pcfscy) == B4.fsiq_pc1){
+								this.zszf6pcjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6pcfscy) >= B4.fsiq_pc1 ){
+							this.zszf6pcjcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6bsfscy) > B4.fsiq_bs10 && Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs5){
-						this.zszf6bsjcl = "5-10%";
-						if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs5){
-							this.zszf6bsjcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6bsfscy) > B4.fsiq_bs5 && Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs2){
-						this.zszf6bsjcl = "2-5%";
-						if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs2){
-							this.zszf6bsjcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6bsfscy) > B4.fsiq_bs2 && Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs1){
-						this.zszf6bsjcl = "1-2%";
-						if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs1){
-							this.zszf6bsjcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6bsfscy) >= B4.fsiq_bs1 ){
-						this.zszf6bsjcl = "<1%";
 					}
-				}
-			}
-			
-			//bs强弱，基础
-			if(Math.abs(this.zszf6cafscy) >= this.zszf6caljz){
-				if(this.zszf6cafscy > 0){
-					this.zszf6caqrx = 1;
-				}else{
-					this.zszf6caqrx = 2;
 				}
 				
-				if(this.zszf6cafscy < 0){
-					if(Math.abs(this.zszf6cafscy) <= B4.ca_fsiq25){
-						this.zszf6cajcl = ">25%";
-						if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq25){
-							this.zszf6cajcl ="25%";
-						}
-					}else if(Math.abs(this.zszf6cafscy) > B4.ca_fsiq25 && Math.abs(this.zszf6cafscy) <= B4.ca_fsiq10){
-						this.zszf6cajcl = "10-25%";
-						if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq10){
-							this.zszf6cajcl ="10%";
-						}
-					}else if(Math.abs(this.zszf6cafscy) > B4.ca_fsiq10 && Math.abs(this.zszf6cafscy) <= B4.ca_fsiq5){
-						this.zszf6cajcl = "5-10%";
-						if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq5){
-							this.zszf6cajcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6cafscy) > B4.ca_fsiq5 && Math.abs(this.zszf6cafscy) <= B4.ca_fsiq2){
-						this.zszf6cajcl = "2-5%";
-						if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq2){
-							this.zszf6cajcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6cafscy) > B4.ca_fsiq2 && Math.abs(this.zszf6cafscy) <= B4.ca_fsiq1){
-						this.zszf6cajcl = "1-2%";
-						if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq1){
-							this.zszf6cajcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6cafscy) >= B4.ca_fsiq1 ){
-						this.zszf6cajcl = "<1%";
+				//pm强弱，基础
+				if(Math.abs(this.zszf6pmfscy) >= this.zszf6pmljz){
+					if(this.zszf6pmfscy > 0){
+						this.zszf6pmqrx = 1;
+					}else{
+						this.zszf6pmqrx = 2;
 					}
-				}else{
-					if(Math.abs(this.zszf6cafscy) <= B4.fsiq_ca25){
-						this.zszf6cajcl = ">25%";
-						if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca25){
-							this.zszf6cajcl ="25%";
+					
+					if(this.zszf6pmfscy < 0){
+						if(Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq25){
+							this.zszf6pmjcl = ">25%";
+							if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq25){
+								this.zszf6pmjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) > B4.pm_fsiq25 && Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq10){
+							this.zszf6pmjcl = "10-25%";
+							if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq10){
+								this.zszf6pmjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) > B4.pm_fsiq10 && Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq5){
+							this.zszf6pmjcl = "5-10%";
+							if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq5){
+								this.zszf6pmjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) > B4.pm_fsiq5 && Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq2){
+							this.zszf6pmjcl = "2-5%";
+							if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq2){
+								this.zszf6pmjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) > B4.pm_fsiq2 && Math.abs(this.zszf6pmfscy) <= B4.pm_fsiq1){
+							this.zszf6pmjcl = "1-2%";
+							if(Math.abs(this.zszf6pmfscy) == B4.pm_fsiq1){
+								this.zszf6pmjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) >= B4.pm_fsiq1 ){
+							this.zszf6pmjcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6cafscy) > B4.fsiq_ca25 && Math.abs(this.zszf6cafscy) <= B4.fsiq_ca10){
-						this.zszf6cajcl = "10-25%";
-						if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca10){
-							this.zszf6cajcl ="10%";
+					}else{
+						if(Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm25){
+							this.zszf6pmjcl = ">25%";
+							if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm25){
+								this.zszf6pmjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) > B4.fsiq_pm25 && Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm10){
+							this.zszf6pmjcl = "10-25%";
+							if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm10){
+								this.zszf6pmjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) > B4.fsiq_pm10 && Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm5){
+							this.zszf6pmjcl = "5-10%";
+							if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm5){
+								this.zszf6pmjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) > B4.fsiq_pm5 && Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm2){
+							this.zszf6pmjcl = "2-5%";
+							if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm2){
+								this.zszf6pmjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) > B4.fsiq_pm2 && Math.abs(this.zszf6pmfscy) <= B4.fsiq_pm1){
+							this.zszf6pmjcl = "1-2%";
+							if(Math.abs(this.zszf6pmfscy) == B4.fsiq_pm1){
+								this.zszf6pmjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6pmfscy) >= B4.fsiq_pm1 ){
+							this.zszf6pmjcl = "<1%";
 						}
-					}else if(Math.abs(this.zszf6cafscy) > B4.fsiq_ca10 && Math.abs(this.zszf6cafscy) <= B4.fsiq_ca5){
-						this.zszf6cajcl = "5-10%";
-						if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca5){
-							this.zszf6cajcl ="5%";
-						}
-					}else if(Math.abs(this.zszf6cafscy) > B4.fsiq_ca5 && Math.abs(this.zszf6cafscy) <= B4.fsiq_ca2){
-						this.zszf6cajcl = "2-5%";
-						if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca2){
-							this.zszf6cajcl ="2%";
-						}
-					}else if(Math.abs(this.zszf6cafscy) > B4.fsiq_ca2 && Math.abs(this.zszf6cafscy) <= B4.fsiq_ca1){
-						this.zszf6cajcl = "1-2%";
-						if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca1){
-							this.zszf6cajcl ="1%";
-						}
-					}else if(Math.abs(this.zszf6cafscy) >= B4.fsiq_ca1 ){
-						this.zszf6cajcl = "<1%";
 					}
 				}
+				
+				//zl强弱，基础
+				if(Math.abs(this.zszf6zlfscy) >= this.zszf6zlljz){
+					if(this.zszf6zlfscy > 0){
+						this.zszf6zlqrx = 1;
+					}else{
+						this.zszf6zlqrx = 2;
+					}
+					
+					if(this.zszf6zlfscy < 0){
+						if(Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq25){
+							this.zszf6zljcl = ">25%";
+							if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq25){
+								this.zszf6zljcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) > B4.zl_fsiq25 && Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq10){
+							this.zszf6zljcl = "10-25%";
+							if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq10){
+								this.zszf6zljcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) > B4.zl_fsiq10 && Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq5){
+							this.zszf6zljcl = "5-10%";
+							if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq5){
+								this.zszf6zljcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) > B4.zl_fsiq5 && Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq2){
+							this.zszf6zljcl = "2-5%";
+							if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq2){
+								this.zszf6zljcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) > B4.zl_fsiq2 && Math.abs(this.zszf6zlfscy) <= B4.zl_fsiq1){
+							this.zszf6zljcl = "1-2%";
+							if(Math.abs(this.zszf6zlfscy) == B4.zl_fsiq1){
+								this.zszf6zljcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) >= B4.zl_fsiq1 ){
+							this.zszf6zljcl = "<1%";
+						}
+					}else{
+						if(Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl25){
+							this.zszf6zljcl = ">25%";
+							if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl25){
+								this.zszf6zljcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) > B4.fsiq_zl25 && Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl10){
+							this.zszf6zljcl = "10-25%";
+							if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl10){
+								this.zszf6zljcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) > B4.fsiq_zl10 && Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl5){
+							this.zszf6zljcl = "5-10%";
+							if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl5){
+								this.zszf6zljcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) > B4.fsiq_zl5 && Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl2){
+							this.zszf6zljcl = "2-5%";
+							if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl2){
+								this.zszf6zljcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) > B4.fsiq_zl2 && Math.abs(this.zszf6zlfscy) <= B4.fsiq_zl1){
+							this.zszf6zljcl = "1-2%";
+							if(Math.abs(this.zszf6zlfscy) == B4.fsiq_zl1){
+								this.zszf6zljcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6zlfscy) >= B4.fsiq_zl1 ){
+							this.zszf6zljcl = "<1%";
+						}
+					}
+				}
+				
+				//bs强弱，基础
+				if(Math.abs(this.zszf6bsfscy) >= this.zszf6bsljz){
+					if(this.zszf6bsfscy > 0){
+						this.zszf6bsqrx = 1;
+					}else{
+						this.zszf6bsqrx = 2;
+					}
+					
+					if(this.zszf6bsfscy < 0){
+						if(Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq25){
+							this.zszf6bsjcl = ">25%";
+							if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq25){
+								this.zszf6bsjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) > B4.bs_fsiq25 && Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq10){
+							this.zszf6bsjcl = "10-25%";
+							if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq10){
+								this.zszf6bsjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) > B4.bs_fsiq10 && Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq5){
+							this.zszf6bsjcl = "5-10%";
+							if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq5){
+								this.zszf6bsjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) > B4.bs_fsiq5 && Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq2){
+							this.zszf6bsjcl = "2-5%";
+							if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq2){
+								this.zszf6bsjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) > B4.bs_fsiq2 && Math.abs(this.zszf6bsfscy) <= B4.bs_fsiq1){
+							this.zszf6bsjcl = "1-2%";
+							if(Math.abs(this.zszf6bsfscy) == B4.bs_fsiq1){
+								this.zszf6bsjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) >= B4.bs_fsiq1 ){
+							this.zszf6bsjcl = "<1%";
+						}
+					}else{
+						if(Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs25){
+							this.zszf6bsjcl = ">25%";
+							if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs25){
+								this.zszf6bsjcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) > B4.fsiq_bs25 && Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs10){
+							this.zszf6bsjcl = "10-25%";
+							if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs10){
+								this.zszf6bsjcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) > B4.fsiq_bs10 && Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs5){
+							this.zszf6bsjcl = "5-10%";
+							if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs5){
+								this.zszf6bsjcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) > B4.fsiq_bs5 && Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs2){
+							this.zszf6bsjcl = "2-5%";
+							if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs2){
+								this.zszf6bsjcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) > B4.fsiq_bs2 && Math.abs(this.zszf6bsfscy) <= B4.fsiq_bs1){
+							this.zszf6bsjcl = "1-2%";
+							if(Math.abs(this.zszf6bsfscy) == B4.fsiq_bs1){
+								this.zszf6bsjcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6bsfscy) >= B4.fsiq_bs1 ){
+							this.zszf6bsjcl = "<1%";
+						}
+					}
+				}
+				
+				//bs强弱，基础
+				if(Math.abs(this.zszf6cafscy) >= this.zszf6caljz){
+					if(this.zszf6cafscy > 0){
+						this.zszf6caqrx = 1;
+					}else{
+						this.zszf6caqrx = 2;
+					}
+					
+					if(this.zszf6cafscy < 0){
+						if(Math.abs(this.zszf6cafscy) <= B4.ca_fsiq25){
+							this.zszf6cajcl = ">25%";
+							if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq25){
+								this.zszf6cajcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) > B4.ca_fsiq25 && Math.abs(this.zszf6cafscy) <= B4.ca_fsiq10){
+							this.zszf6cajcl = "10-25%";
+							if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq10){
+								this.zszf6cajcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) > B4.ca_fsiq10 && Math.abs(this.zszf6cafscy) <= B4.ca_fsiq5){
+							this.zszf6cajcl = "5-10%";
+							if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq5){
+								this.zszf6cajcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) > B4.ca_fsiq5 && Math.abs(this.zszf6cafscy) <= B4.ca_fsiq2){
+							this.zszf6cajcl = "2-5%";
+							if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq2){
+								this.zszf6cajcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) > B4.ca_fsiq2 && Math.abs(this.zszf6cafscy) <= B4.ca_fsiq1){
+							this.zszf6cajcl = "1-2%";
+							if(Math.abs(this.zszf6cafscy) == B4.ca_fsiq1){
+								this.zszf6cajcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) >= B4.ca_fsiq1 ){
+							this.zszf6cajcl = "<1%";
+						}
+					}else{
+						if(Math.abs(this.zszf6cafscy) <= B4.fsiq_ca25){
+							this.zszf6cajcl = ">25%";
+							if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca25){
+								this.zszf6cajcl ="25%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) > B4.fsiq_ca25 && Math.abs(this.zszf6cafscy) <= B4.fsiq_ca10){
+							this.zszf6cajcl = "10-25%";
+							if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca10){
+								this.zszf6cajcl ="10%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) > B4.fsiq_ca10 && Math.abs(this.zszf6cafscy) <= B4.fsiq_ca5){
+							this.zszf6cajcl = "5-10%";
+							if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca5){
+								this.zszf6cajcl ="5%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) > B4.fsiq_ca5 && Math.abs(this.zszf6cafscy) <= B4.fsiq_ca2){
+							this.zszf6cajcl = "2-5%";
+							if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca2){
+								this.zszf6cajcl ="2%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) > B4.fsiq_ca2 && Math.abs(this.zszf6cafscy) <= B4.fsiq_ca1){
+							this.zszf6cajcl = "1-2%";
+							if(Math.abs(this.zszf6cafscy) == B4.fsiq_ca1){
+								this.zszf6cajcl ="1%";
+							}
+						}else if(Math.abs(this.zszf6cafscy) >= B4.fsiq_ca1 ){
+							this.zszf6cajcl = "<1%";
+						}
+					}
+				}
+			}else if(this.fsiq == -1){
+				this.zszf6 = -1;
+				this.zszf6jz = -1f;
+//				this.zszf6fsd = this.zszf10fsd;
 			}
 		}
+			
 		
 		//10个、6个总分有缺 mark4
-		if(count1 >=1 && this.fsiq != -1){
+		if(count1 >=1 && this.fsiq != -1 && !(this.inf == -1 || this.si == -1 || this.bd == -1 || this.mr == -1 || this.bs == -1 || this.pm == -1)){
 			this.zszf10 = -1 ;
 			this.zszf10jz = -1f;
 			this.zszf10fsd = -1;
@@ -9466,10 +9500,10 @@ public class Age4{
 				}
 			}
 		}
-		if(this.fsiq == -1){
-			this.zszf10 = -1;
-			this.zszf6 = -1;
-		}
+//		if(this.fsiq == -1){
+//			this.zszf10 = -1;
+//			this.zszf6 = -1;
+//		}
 	}
 	
 	public void cybj(){

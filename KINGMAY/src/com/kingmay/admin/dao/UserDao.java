@@ -11,8 +11,10 @@ import com.kingmay.beans.Admin;
 import com.kingmay.beans.Age2;
 import com.kingmay.beans.Age4;
 import com.kingmay.beans.Child;
+import com.kingmay.beans.MarkCount;
 import com.kingmay.beans.Pei;
 import com.kingmay.beans.User;
+import com.kingmay.beans.UserControl;
 
 public class UserDao {
 	private SessionFactory sessionFactory;
@@ -178,6 +180,10 @@ public class UserDao {
 				u.setUbir(user.getUbir());
 				u.setUcanuse(user.getUcanuse());
 				u.setUused(user.getUused());
+				u.setUcanuse4(user.getUcanuse4());
+//				System.out.println("dao ucanused:"+u.getUcanuse()+" used:"+u.getUused());
+//				System.out.println("dao ucanused4:"+u.getUcanuse4()+" used4:"+u.getUused4());
+				u.setUused4(user.getUused4());
 				u.setUcom(user.getUcom());
 				u.setUcomadd(user.getUcomadd());
 				u.setUemail(user.getUemail());
@@ -646,5 +652,53 @@ public class UserDao {
 		}finally{
 			session.close();
 		}
+	}
+	
+	/**
+	 * 添加主试操作
+	 * @param control
+	 * @return boolean
+	 * */
+	public boolean AddUserControl(UserControl control){
+		int num=0; //标识注册是否成功,0表示不成功,>0成功
+		Session session=null;
+		Transaction transaction=null;
+		try{
+			session=sessionFactory.openSession();
+			transaction=session.beginTransaction();
+			session.save(control).toString();
+			transaction.commit();//写入数据库表
+		}catch (Exception e) {
+			e.printStackTrace();
+			num=0;
+			return false ;
+		}finally{
+			session.close();
+		}
+		return true;
+	}
+	
+	/**
+	 * 添加主试增加减少记分次数操作
+	 * @param mk
+	 * @return boolean
+	 * */
+	public boolean AddMarkCount(MarkCount mk){
+		int num=0; //标识注册是否成功,0表示不成功,>0成功
+		Session session=null;
+		Transaction transaction=null;
+		try{
+			session=sessionFactory.openSession();
+			transaction=session.beginTransaction();
+			session.save(mk).toString();
+			transaction.commit();//写入数据库表
+		}catch (Exception e) {
+			e.printStackTrace();
+			num=0;
+			return false ;
+		}finally{
+			session.close();
+		}
+		return true;
 	}
 }

@@ -11,12 +11,15 @@ import com.kingmay.admin.dao.UserDao;
 import com.kingmay.beans.Admin;
 import com.kingmay.beans.OnlineUser;
 import com.kingmay.beans.User;
+import com.kingmay.beans.UserControl;
 import com.kingmay.utils.UserStore;
 import com.opensymphony.xwork2.ActionSupport;
+import com.kingmay.utils.*;;
 
 public class UserLoginAction extends ActionSupport{
 	private User u;
 	private UserDao userDao;
+	private String validataCode;
 	
 	public UserLoginAction(){}
 
@@ -34,6 +37,14 @@ public class UserLoginAction extends ActionSupport{
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	public String getValidataCode() {
+		return validataCode;
+	}
+
+	public void setValidataCode(String validataCode) {
+		this.validataCode = validataCode;
 	}
 
 	@Override
@@ -55,6 +66,13 @@ public class UserLoginAction extends ActionSupport{
 				UserStore.addUser(onlineUser);
 			}
 			
+			UserControl uc = new UserControl();
+			uc.setCcontrol("登录");
+			uc.setCcontent("主试：【"+uu.getUid()+"】登录");
+			uc.setCtime(uu.getUlast());
+			uc.setCip(UserStore.getIpAddr(request));
+			userDao.AddUserControl(uc);
+			
 			return SUCCESS;
 		}else{
 			return INPUT;
@@ -64,9 +82,13 @@ public class UserLoginAction extends ActionSupport{
 	@Override
 	public void validate() {
 		User uu = userDao.UserLogin(u.getUlname(), u.getUlpwd());
-		if(null == uu){
-			HttpServletRequest request = ServletActionContext.getRequest();
-			HttpSession session = request.getSession();
+		boolean isValidata = ValidataCode.verification(validataCode);
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		if (isValidata == false) {
+			request.setAttribute("msg","验证码输入错误，请重新输入！");
+			request.getRequestDispatcher("/login.jsp");
+		} else if(null == uu){
 			request.setAttribute("msg","登录失败,请验证账号或者密码是否正确");
 			request.getRequestDispatcher("/login.jsp");
 		}

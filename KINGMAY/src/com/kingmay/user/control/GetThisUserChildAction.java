@@ -95,7 +95,7 @@ public class GetThisUserChildAction extends ActionSupport{
 				pageN = 1;
 			}else{
 				pageN=(Integer)session.getAttribute("pageN");
-				System.out.println("after get pageNo :"+pageN);
+//				System.out.println("after get pageNo :"+pageN);
 				if(pageN<=0){
 					pageN = 1;
 				}

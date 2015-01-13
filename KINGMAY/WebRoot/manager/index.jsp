@@ -7,8 +7,8 @@
 %>
 
 <!DOCTYPE HTML>
-<html>
-<head lang="zh-CN">
+<html lang="zh-CN">
+<head>
 <base href="<%=basePath%>">
 <title>京美心理测量-管理员后台</title>
 <jsp:include page="../end-libs.jsp"></jsp:include>

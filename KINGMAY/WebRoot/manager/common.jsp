@@ -29,6 +29,16 @@
 				</li>
 			</ul>
 		</div>
+		<div class="jm-title" title="网站管理">
+			<ul class="jm_menu">
+				<li><a href="manager/onlineUserAction">在线用户列表</a>
+				</li>
+				<li><a href="manager/showControlAction">用户操作列表</a>
+				</li>
+				<li><a href="manager/showMarkCountAction">用户记分数量历史</a>
+				</li>
+			</ul>
+		</div>
 		<%if (admin.getAauth().equals("0") ) {%>
 		<div class="jm-title" title="报告管理">
 			<ul class="jm_menu">
@@ -47,6 +57,8 @@
 		<%} %>
 		<div class="jm-title" title="系统管理">
 			<ul class="jm_menu">
+				<li><a href="manager/changepwd_a.jsp">修改密码</a>
+				</li>
 				<li><a href="manager/adminLogoutAction.action">安全退出</a>
 				</li>
 			</ul>

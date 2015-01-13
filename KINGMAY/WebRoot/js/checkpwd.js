@@ -11,7 +11,7 @@ function GetElCol(szN)
 try{return document.getElementsByName(szN)}catch(e){}; 
 } 
 function EvalPwd(sP) 
-{ 
+{
 var aPQ=new Array(6); 
 if(ClientSideStrongPassword(sP,gSimilarityMap,gDictionary)) 
 { 
@@ -39,7 +39,7 @@ oW.color=aPQ[3];
 oM.color=aPQ[4]; 
 oS.color=aPQ[5]; 
 } 
-//* 
+// *
 var kNoCanonicalCounterpart = 0; 
 var kCapitalLetter = 0; 
 var kSmallLetter = 1; 

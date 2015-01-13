@@ -66,13 +66,13 @@ public class ChangeQueAction extends ActionSupport{
 			return INPUT;
 		}
 		if(userDao.updateUserQue(u.getUid(), que, ans1)){
-			System.out.println("----");
+//			System.out.println("----");
 			u.setUque(que);
 			u.setUans(ans1);
 			session.setAttribute("user", u);
 			return SUCCESS;
 		}else{
-			System.out.println("====");
+//			System.out.println("====");
 			return INPUT;
 		}
 	}

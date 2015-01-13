@@ -4,7 +4,7 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<constant name="struts.objectFactory" value="spring" />
-	<package name="default" extends="struts-default">
+	<package name="default" extends="struts-default" >
 
 		<!-- 拦截器 -->
 		<interceptors>
@@ -23,6 +23,10 @@
 			<result name="adminlogin">/manager/login.jsp</result>
 		</global-results>
 
+		<!-- 验证码 -->
+		<action name="randomCode" class="com.kingmay.utils.action.ValidataCodeAction" method="randomCode" >
+		</action>
+		
 
 		<!--管理员登录 -->
 		<action name="adminLoginAction" class="adminLoginAction"
@@ -415,7 +419,28 @@
 			<result name="input">uservalidate.jsp</result>
 		</action>
 		
+		<!-- 显示用户操作-->
+		<action name="showControlAction" class="showControlAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />	
+			<result name="success">usercontrol.jsp</result>
+			<result name="input">usercontrol.jsp</result>
+		</action>
 		
+		<!-- 显示用户操作-->
+		<action name="showMarkCountAction" class="showMarkCountAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />	
+			<result name="success">markcount.jsp</result>
+			<result name="input">markcount.jsp</result>
+		</action>
+		
+		<!-- 查询儿童 -->
+		<action name="searchChildAction" class="searchChildAction">
+			<interceptor-ref name="interceptorAdminLogin" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">manager/backchild.jsp</result>
+		</action>
 		
 	</package>
 	<include file="struts1.xml"></include>

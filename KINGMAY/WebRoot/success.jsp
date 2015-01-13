@@ -7,8 +7,8 @@
 %>
 
 <!DOCTYPE html>
-<html>
-<head lang="zh-CN">
+<htm llang="zh-CN">
+<head>
 <jsp:include page="lib.jsp"></jsp:include>
 <script type="text/javascript">
 	function countDown(secs, surl) {    

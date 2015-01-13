@@ -213,7 +213,7 @@ public class PeiDao {
 			Query queryObject=session.createQuery(queryString);
 			queryObject.setParameter(0, pei.getPid());
 			List<Pei> l = queryObject.list();
-			System.out.println("update Pei list size-->" + l.size() + pei.getPid());
+//			System.out.println("update Pei list size-->" + l.size() + pei.getPid());
 			if(l.size() == 1){
 				Pei p = (Pei)l.get(0);
 				if(!p.getPparent().equals(pei.getPparent())){
@@ -255,7 +255,7 @@ public class PeiDao {
 	 * @param pparent
 	 * */
 	public void checkAndUpdateParentPei(String pparent){
-		System.out.println("enter check and update parent pei");
+//		System.out.println("enter check and update parent pei");
 		Session session=null;
 		Transaction transaction=null;
 		try{
@@ -265,7 +265,7 @@ public class PeiDao {
 			Query queryObject=session.createQuery(queryString);
 			queryObject.setParameter(0, pparent);
 			List<Pei> l = queryObject.list();
-			System.out.println("the lise size is -->" + l.size());
+//			System.out.println("the lise size is -->" + l.size());
 			if(l.size() > 0){
 				updateParentPei(pparent, 1);
 			}else{

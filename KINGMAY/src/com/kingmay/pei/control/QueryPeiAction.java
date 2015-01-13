@@ -31,7 +31,7 @@ public class QueryPeiAction extends ActionSupport{
 		peilist = peiDao.QueryParentPei();
 		
 		if(peilist == null){
-			System.out.println("enter peilist == null");
+//			System.out.println("enter peilist == null");
 			return SUCCESS;
 		}
 		

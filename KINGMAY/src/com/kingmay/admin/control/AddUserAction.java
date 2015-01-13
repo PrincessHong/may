@@ -13,6 +13,9 @@ public class AddUserAction extends ActionSupport{
 	public AddUserAction(){}
 	private User u;
 	private int adduse;
+	private int reduce;
+	private int adduse4;
+	private int reduce4;
 	private UserDao userDao;
 	public User getU() {
 		return u;
@@ -34,9 +37,29 @@ public class AddUserAction extends ActionSupport{
 	public void setAdduse(int adduse) {
 		this.adduse = adduse;
 	}
+	
+	public int getReduce() {
+		return reduce;
+	}
+	public void setReduce(int reduce) {
+		this.reduce = reduce;
+	}
+	public int getAdduse4() {
+		return adduse4;
+	}
+	public void setAdduse4(int adduse4) {
+		this.adduse4 = adduse4;
+	}
+	public int getReduce4() {
+		return reduce4;
+	}
+	public void setReduce4(int reduce4) {
+		this.reduce4 = reduce4;
+	}
 	@Override
 	public String execute() throws Exception {
 		u.setUcanuse(adduse+u.getUcanuse());
+		u.setUcanuse4(adduse4+u.getUcanuse4());
 		if(userDao.AddUser(u)){
 			return SUCCESS;
 		}else{

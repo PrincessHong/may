@@ -143,18 +143,18 @@ public class AgeDao {
 				list_l=queryObject.list();
 				session.close();
 				if(list_l.size() < 1 || list_l == null){
-					System.out.println("=== "+list.get(i).getCid());
+//					System.out.println("=== "+list.get(i).getCid());
 					session=sessionFactory.openSession();
 					queryString="from Age4 where cid=?";
 					queryObject=session.createQuery(queryString);
 					queryObject.setParameter(0, list.get(i).getCid());
 					list_l=queryObject.list();
 					session.close();
-					if(list_l.size() == 1){
+					if(list_l.size() >= 1){
 						list_o.add(list_l.get(0));
 					}
 				}else{
-					if(list_l.size() == 1){
+					if(list_l.size() >= 1){
 						list_o.add(list_l.get(0));
 					}
 				}
@@ -244,5 +244,28 @@ public class AgeDao {
 			return null;
 		}
 	}
+	
+	/**
+	 * ²éÑ¯¶ùÍ¯
+	 * @return List<User>
+	 * */
+	public List<Child> SearchChildById_Name(String id,String name){
+		Session session=null;
+		try{
+			session=sessionFactory.openSession();
+			String queryString="from Child as c where c.cid like '%"+id+"%' and c.cname like '%"+name+"%'";
+			Query queryObject=session.createQuery(queryString);
+//			queryObject.setString(0,"%"+id+"%");
+//			queryObject.setString(1,"%"+name+"%");
+			List<Child> childs=queryObject.list();
+			return childs;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally{
+			session.close();
+		}
+	}
+	
 	
 }

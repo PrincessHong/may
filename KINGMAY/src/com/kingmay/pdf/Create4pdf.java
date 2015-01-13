@@ -3340,7 +3340,7 @@ public class Create4pdf {
     	cell.setBorderWidth(0);
     	aTable.addCell(cell);
     	
-    	cell = new PdfPCell(new Phrase("分测验证均值",RedFontChinese));
+    	cell = new PdfPCell(new Phrase("分测验均值",RedFontChinese));
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setBorderWidth(0);
@@ -4536,7 +4536,7 @@ public class Create4pdf {
     	cell.setBorderWidth(0);
     	aTable.addCell(cell);
     	
-    	cell = new PdfPCell(new Phrase("分测验证均值",RedFontChinese));
+    	cell = new PdfPCell(new Phrase("分测验均值",RedFontChinese));
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setBorderWidth(0);
@@ -5507,7 +5507,7 @@ public class Create4pdf {
     	aTable.addCell(cell);
     	
     	
-    	cell = new PdfPCell(new Phrase("确定分检测水平的强项与弱项，请参照WPPSI-IV(CN)指导手册附表B.1,B.2,B.3和B.4",SmallFont));
+    	cell = new PdfPCell(new Phrase("确定分测验水平的强项与弱项，请参照WPPSI-IV(CN)指导手册附表B.1,B.2,B.3和B.4",SmallFont));
     	cell.setFixedHeight(20);
     	cell.setColspan(12);
     	cell.setBorderWidth(0);
@@ -5535,7 +5535,7 @@ public class Create4pdf {
     	aTable.getDefaultCell().setPadding(3);
     	aTable.getDefaultCell().setFixedHeight(20);
     	
-    	int vci = a.getVci() , vsi = a.getVsi() , fri = a.getFri(), wmi = a.getWmi() , psi = a.getPc();
+    	int vci = a.getVci() , vsi = a.getVsi() , fri = a.getFri(), wmi = a.getWmi() , psi = a.getPsi();
     	int in = a.getInf(), si = a.getSi(), bd = a.getBd() , oa = a.getOa() ,mr = a.getMr(), pc = a.getPc() ,pm = a.getPm() , zl = a.getZl() ,bs = a.getBs() , ca = a.getCa() ;
     	
     	String $results1[] = {String.valueOf(a.getVcii()),String.valueOf(a.getVsii()),String.valueOf(a.getVci_vsi()),String.valueOf(a.getVci_vsiljz()),String.valueOf(a.getVci_vsiqrx()),String.valueOf(a.getVci_vsijcl())};
@@ -7013,7 +7013,7 @@ public class Create4pdf {
     	cell.setFixedHeight(20);
     	aTable.addCell(cell);
     	
-    	if( pm != -1 && zl != -1){
+    	if( bs != -1 && ca != -1){
     		for(int i = 0 ; i< 6 ;i++){
     			if(i != 4 && i != 1 && i!= 0){
     				cell = new PdfPCell(new Phrase(""+$results15[i],FontChinese));

@@ -2669,7 +2669,7 @@ public class Create2pdf {
     	cell.setBorderWidth(0);
     	aTable.addCell(cell);
     	
-    	cell = new PdfPCell(new Phrase("分测验证均值",RedFontChinese));
+    	cell = new PdfPCell(new Phrase("分测验均值",RedFontChinese));
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setBorderWidth(0);
@@ -3265,7 +3265,7 @@ public class Create2pdf {
     	String $results4[] = {String.valueOf(a.getOa()),String.valueOf(a.getOal()),String.valueOf(zszf5jz),String.valueOf(a.getZsfs5oafscy()),String.valueOf(a.getZsfs5oaljz()),String.valueOf(a.getZsfs5oaqrx()),String.valueOf(a.getZsfs5oajcl())};
     	String $results5[] = {String.valueOf(a.getPm()),String.valueOf(a.getPml()),String.valueOf(zszf5jz),String.valueOf(a.getZsfs5pmfscy()),String.valueOf(a.getZsfs5pmljz()),String.valueOf(a.getZsfs5pmqrx()),String.valueOf(a.getZsfs5pmjcl())};
     	String $results6[] = {String.valueOf(a.getZl()),String.valueOf(a.getZll()),String.valueOf(zszf5jz),String.valueOf(a.getZsfs5zlfscy()),String.valueOf(a.getZsfs5zlljz()),String.valueOf(a.getZsfs5zlqrx()),String.valueOf(a.getZsfs5zljcl())};
-    	
+    	System.out.println("pdf this.zsfs5 ->"+zszf5);
     	BaseFont b_f = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
     	Font RedFontChinese = new Font(b_f, 7, Font.NORMAL,red);
     	Font BoldFont = new Font(b_f , 8,Font.BOLD,Black);
@@ -3446,7 +3446,7 @@ public class Create2pdf {
     	cell.setBorderWidth(0);
     	aTable.addCell(cell);
     	
-    	cell = new PdfPCell(new Phrase("分测验证均值",RedFontChinese));
+    	cell = new PdfPCell(new Phrase("分测验均值",RedFontChinese));
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setBorderWidth(0);
@@ -4245,7 +4245,7 @@ public class Create2pdf {
 		cell.setFixedHeight(25);
 		aTable.addCell(cell);
 		
-    	cell = new PdfPCell(new Phrase("语言理解-工作记忆",FontChinese));
+    	cell = new PdfPCell(new Phrase("言语理解-工作记忆",FontChinese));
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     	cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
     	cell.setBorderWidth(0);

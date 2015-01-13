@@ -23,6 +23,27 @@ public class UserControlDao {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	
+	/**
+	 * 显示所有用户操作
+	 * @return List<UserControl>
+	 * */
+	public List<UserControl> getUserControl(){
+		Session session=null;
+		try{
+			session=sessionFactory.openSession();
+			String queryString="from UserControl";
+			Query queryObject=session.createQuery(queryString);
+			List<UserControl> users=queryObject.list();
+			return users;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally{
+			session.close();
+		}
+	}
+	
 	/**
 	 * 分页显示所有用户操作
 	 * @return List<UserControl>
@@ -36,6 +57,26 @@ public class UserControlDao {
 			queryObject.setFirstResult((pageNo-1)*pageSize);
 			queryObject.setMaxResults(pageSize);
 			List<UserControl> users=queryObject.list();
+			return users;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally{
+			session.close();
+		}
+	}
+	
+	/**
+	 * 显示所有用户操作
+	 * @return List<MarkCount>
+	 * */
+	public List<MarkCount> getMarkCount(){
+		Session session=null;
+		try{
+			session=sessionFactory.openSession();
+			String queryString="from MarkCount";
+			Query queryObject=session.createQuery(queryString);
+			List<MarkCount> users=queryObject.list();
 			return users;
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -66,4 +107,5 @@ public class UserControlDao {
 			session.close();
 		}
 	}
+	
 }
